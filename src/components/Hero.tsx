@@ -101,13 +101,15 @@ export default function Hero() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
           >
             <motion.a
-              href="#join"
+              href="https://chat.whatsapp.com/placeholder"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative px-8 py-4 bg-[#0078D4] text-white font-semibold rounded-lg overflow-hidden"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="relative z-10 flex items-center space-x-2">
-                <span>Join the Community</span>
+                <span>Join our Community</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
               <motion.div

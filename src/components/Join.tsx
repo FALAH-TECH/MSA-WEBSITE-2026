@@ -52,16 +52,15 @@ export default function Join() {
           />
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-6">
-            Ready to level up your
+            Stay connected with
             <br />
             <span className="bg-gradient-to-r from-[#0078D4] to-[#50A0E8] bg-clip-text text-transparent">
-              tech journey?
+              events and updates.
             </span>
           </h2>
 
           <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-12">
-            Join Microsoft Student Ambassadors at LBSCEK and become part of a
-            community that empowers you to learn, build, and lead.
+            Join our WhatsApp community to receive event announcements, workshops, and exclusive updates from Microsoft Student Ambassadors at LBSCEK.
           </p>
         </motion.div>
 
@@ -92,13 +91,16 @@ export default function Join() {
             transition={{ duration: 0.6, delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <motion.button
-              className="group relative px-8 py-4 bg-[#0078D4] text-white font-semibold rounded-lg overflow-hidden"
+            <motion.a
+              href="https://chat.whatsapp.com/placeholder"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative px-8 py-4 bg-[#0078D4] text-white font-semibold rounded-lg overflow-hidden inline-flex items-center justify-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="relative z-10 flex items-center justify-center space-x-2">
-                <span>Apply Now</span>
+                <span>Join our Community</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
               <motion.div
@@ -107,15 +109,16 @@ export default function Join() {
                 whileHover={{ x: 0 }}
                 transition={{ duration: 0.3 }}
               />
-            </motion.button>
+            </motion.a>
 
-            <motion.button
-              className="px-8 py-4 bg-white/5 text-white font-semibold rounded-lg border border-white/10 hover:bg-white/10 transition-colors"
+            <motion.a
+              href="#events"
+              className="px-8 py-4 bg-white/5 text-white font-semibold rounded-lg border border-white/10 hover:bg-white/10 transition-colors inline-flex items-center justify-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Learn More
-            </motion.button>
+              View Events
+            </motion.a>
           </motion.div>
         </motion.div>
 
@@ -126,7 +129,7 @@ export default function Join() {
           className="text-center"
         >
           <p className="text-gray-500 text-sm">
-            Applications are reviewed on a rolling basis. Join us today!
+            Stay updated with the latest events, workshops, and community news.
           </p>
         </motion.div>
       </div>
