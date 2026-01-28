@@ -116,7 +116,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "HAJARA RANA NK",
-    role: "Content Co-Lead",
+    role: "Strategy Co-Lead",
     image: "/Team/rana.jpg",
     socials: {
       instagram: "",
