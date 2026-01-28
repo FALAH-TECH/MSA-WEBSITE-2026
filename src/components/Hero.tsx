@@ -3,8 +3,8 @@ import { ArrowRight, Users, Calendar, Sparkles } from 'lucide-react';
 
 const stats = [
   { label: 'Members', value: '150+', icon: Users },
-  { label: 'Events', value: '40+', icon: Calendar },
-  { label: 'Founded', value: '2020', icon: Sparkles },
+  { label: 'Events', value: '20+', icon: Calendar },
+  { label: 'Founded', value: '2025', icon: Sparkles },
 ];
 
 export default function Hero() {
@@ -101,7 +101,7 @@ export default function Hero() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
           >
             <motion.a
-              href="https://chat.whatsapp.com/placeholder"
+              href="https://chat.whatsapp.com/JN4rgEDWxXN7fC0B4WIUAQ?mode=gi_t"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative px-8 py-4 bg-[#0078D4] text-white font-semibold rounded-lg overflow-hidden"

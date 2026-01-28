@@ -36,21 +36,29 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <motion.a
-            href="#"
-            className="flex items-center space-x-3 group"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <div className="w-10 h-10 bg-gradient-to-br from-[#0078D4] to-[#50A0E8] rounded-lg flex items-center justify-center font-bold text-white text-lg">
-              M
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="text-white font-semibold tracking-tight text-sm">
-                MSA
-              </span>
-              <span className="text-gray-400 text-xs tracking-wide">LBSCEK</span>
-            </div>
-          </motion.a>
+  href="#"
+  className="flex items-center space-x-3 group"
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+>
+  <img
+    src="/LOGO.svg"
+    alt="MSA LBSCEK Logo"
+    className="w-12 h-12  object-contain"
+    
+  />
+
+  <div className="flex flex-col leading-tight">
+    <span className="text-white font-semibold tracking-tight text-sm">
+      MSA
+    </span>
+    <span className="text-gray-400 text-xs tracking-wide">
+      LBSCEK
+    </span>
+  </div>
+</motion.a>
+
+
 
           <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link, index) => (

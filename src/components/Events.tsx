@@ -3,39 +3,44 @@ import { useRef } from 'react';
 import { Calendar, MapPin, Users, ExternalLink } from 'lucide-react';
 
 const featuredEvent = {
-  title: 'Azure DevOps Workshop',
-  date: 'March 15, 2024',
-  time: '2:00 PM - 5:00 PM',
-  location: 'Main Auditorium, LBSCEK',
-  attendees: '120+',
+  title: 'Getting Started with Cybersecurity & Ethical Hacking',
+  date: 'FEBRUARY 5, 2026',
+  time: 'TIME WILL BE ANOUNCED',
+  location: 'ONLINE : VIA GMEET',
+  attendees: '80+',
   description:
-    'Join us for an intensive hands-on workshop on Azure DevOps. Learn CI/CD pipelines, infrastructure as code, and modern deployment practices with industry experts.',
-  tags: ['Azure', 'DevOps', 'CI/CD'],
+    'An introductory webinar designed for first-year students to explore the fundamentals of cybersecurity and ethical hacking, understand real-world security threats, and learn how digital systems are protected in today’s connected world.',
+  tags: ['Cybersecurity', 'Ethical Hacking', 'Digital Safety'],
   status: 'Upcoming',
 };
 
 const pastEvents = [
   {
-    title: 'GitHub Copilot Deep Dive',
-    date: 'Feb 20, 2024',
-    attendees: '95',
+    title: "MSA CARNIVAL",
+    date: "Aug 10, 2025",
+    attendees: "95",
+    reelUrl: "https://www.instagram.com/reel/DNbIJUyyg1o/",
   },
   {
-    title: 'AI & Machine Learning Fundamentals',
-    date: 'Jan 30, 2024',
-    attendees: '110',
+    title: "POP & PITCH",
+    date: "Sep 19, 2025",
+    attendees: "60",
+    reelUrl: "https://www.instagram.com/reel/DO_QorQksFg/",
   },
   {
-    title: 'Cloud Computing Essentials',
-    date: 'Dec 15, 2023',
-    attendees: '85',
+    title: "TECH ENHANCED VISION",
+    date: "Dec 22, 2025",
+    attendees: "20",
+    reelUrl: "https://www.instagram.com/reel/DSp7_AAEnv3/",
   },
   {
-    title: 'Web Development Bootcamp',
-    date: 'Nov 25, 2023',
-    attendees: '130',
+    title: "TECHLAUGHS - THECOMSHOW",
+    date: "Dec 22, 2025",
+    attendees: "100+",
+    reelUrl: "https://www.instagram.com/reel/DStwbcHEnL3/",
   },
 ];
+
 
 export default function Events() {
   const ref = useRef(null);
@@ -99,14 +104,18 @@ export default function Events() {
                     ))}
                   </div>
 
-                  <motion.button
-                    className="inline-flex items-center space-x-2 px-6 py-3 bg-[#0078D4] text-white font-semibold rounded-lg hover:bg-[#005fa3] transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <span>Register Now</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </motion.button>
+                  <motion.a
+  href="https://v0-cybersecurity-webinar.vercel.app/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center space-x-2 px-6 py-3 bg-[#0078D4] text-white font-semibold rounded-lg hover:bg-[#005fa3] transition-colors"
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+>
+  <span>Register Now</span>
+  <ExternalLink className="w-4 h-4" />
+</motion.a>
+
                 </div>
 
                 <div className="lg:w-80 space-y-4">
@@ -158,37 +167,46 @@ export default function Events() {
 
           <div className="space-y-4">
             {pastEvents.map((event, index) => (
-              <motion.div
-                key={event.title}
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                className="group relative"
-              >
-                <div className="flex items-center space-x-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0078D4]/50 transition-all duration-300">
-                  <div className="hidden md:block w-2 h-2 rounded-full bg-[#0078D4]" />
+  <motion.a
+    key={event.title}
+    href={event.reelUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    initial={{ opacity: 0, x: -20 }}
+    animate={isInView ? { opacity: 1, x: 0 } : {}}
+    transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
+    className="group relative block"
+    whileHover={{ scale: 1.01 }}
+    whileTap={{ scale: 0.99 }}
+  >
+    <div className="flex items-center space-x-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0078D4]/50 transition-all duration-300">
+      <div className="hidden md:block w-2 h-2 rounded-full bg-[#0078D4]" />
 
-                  <div className="flex-1">
-                    <h4 className="text-lg font-semibold text-white group-hover:text-[#50A0E8] transition-colors">
-                      {event.title}
-                    </h4>
-                  </div>
+      <div className="flex-1">
+        <h4 className="text-lg font-semibold text-white group-hover:text-[#50A0E8] transition-colors">
+          {event.title}
+        </h4>
+        <p className="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          View Instagram Reel →
+        </p>
+      </div>
 
-                  <div className="flex items-center space-x-6 text-gray-400 text-sm">
-                    <div className="flex items-center space-x-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>{event.date}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Users className="w-4 h-4" />
-                      <span>{event.attendees}</span>
-                    </div>
-                  </div>
-                </div>
+      <div className="flex items-center space-x-6 text-gray-400 text-sm">
+        <div className="flex items-center space-x-2">
+          <Calendar className="w-4 h-4" />
+          <span>{event.date}</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Users className="w-4 h-4" />
+          <span>{event.attendees}</span>
+        </div>
+      </div>
+    </div>
 
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#0078D4] to-[#50A0E8] opacity-0 group-hover:opacity-100 transition-opacity rounded-l-xl" />
-              </motion.div>
-            ))}
+    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#0078D4] to-[#50A0E8] opacity-0 group-hover:opacity-100 transition-opacity rounded-l-xl" />
+  </motion.a>
+))}
+
           </div>
         </motion.div>
       </div>

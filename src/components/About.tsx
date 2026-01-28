@@ -62,9 +62,7 @@ export default function About() {
             </p>
 
             <p className="text-lg text-gray-400 leading-relaxed">
-              Our mission is to foster innovation, encourage knowledge sharing,
-              and provide opportunities for students to grow as developers,
-              leaders, and changemakers in the technology landscape.
+              MSA (Microsoft Learn Student Ambassadors) is an MNC-approved global student community directly run by Microsoft, one of the world's biggest multinational tech companies.
             </p>
           </motion.div>
 
