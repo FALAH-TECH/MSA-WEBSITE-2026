@@ -20,24 +20,28 @@ const pastEvents = [
     date: "Aug 10, 2025",
     attendees: "95",
     reelUrl: "https://www.instagram.com/reel/DNbIJUyyg1o/",
+    posterUrl: "https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=300",
   },
   {
     title: "POP & PITCH",
     date: "Sep 19, 2025",
     attendees: "60",
     reelUrl: "https://www.instagram.com/reel/DO_QorQksFg/",
+    posterUrl: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=300",
   },
   {
     title: "TECH ENHANCED VISION",
     date: "Dec 22, 2025",
     attendees: "20",
     reelUrl: "https://www.instagram.com/reel/DSp7_AAEnv3/",
+    posterUrl: "https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=300",
   },
   {
     title: "TECHLAUGHS - THECOMSHOW",
     date: "Dec 22, 2025",
     attendees: "100+",
     reelUrl: "https://www.instagram.com/reel/DStwbcHEnL3/",
+    posterUrl: "https://images.pexels.com/photos/3945632/pexels-photo-3945632.jpeg?auto=compress&cs=tinysrgb&w=300",
   },
 ];
 
@@ -179,26 +183,36 @@ export default function Events() {
     whileHover={{ scale: 1.01 }}
     whileTap={{ scale: 0.99 }}
   >
-    <div className="flex items-center space-x-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0078D4]/50 transition-all duration-300">
-      <div className="hidden md:block w-2 h-2 rounded-full bg-[#0078D4]" />
-
-      <div className="flex-1">
-        <h4 className="text-lg font-semibold text-white group-hover:text-[#50A0E8] transition-colors">
-          {event.title}
-        </h4>
-        <p className="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          View Instagram Reel →
-        </p>
+    <div className="flex flex-col lg:flex-row lg:items-center gap-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0078D4]/50 transition-all duration-300">
+      <div className="flex-shrink-0 w-full lg:w-24 h-40 lg:h-24 rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-md">
+        <img
+          src={event.posterUrl}
+          alt={event.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
       </div>
 
-      <div className="flex items-center space-x-6 text-gray-400 text-sm">
-        <div className="flex items-center space-x-2">
-          <Calendar className="w-4 h-4" />
-          <span>{event.date}</span>
+      <div className="flex items-center space-x-4 flex-1 min-w-0">
+        <div className="hidden md:block w-2 h-2 rounded-full bg-[#0078D4]" />
+
+        <div className="flex-1 min-w-0">
+          <h4 className="text-lg font-semibold text-white group-hover:text-[#50A0E8] transition-colors truncate">
+            {event.title}
+          </h4>
+          <p className="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            View Instagram Reel →
+          </p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Users className="w-4 h-4" />
-          <span>{event.attendees}</span>
+
+        <div className="flex items-center space-x-6 text-gray-400 text-sm flex-shrink-0">
+          <div className="flex items-center space-x-2">
+            <Calendar className="w-4 h-4" />
+            <span className="hidden sm:inline">{event.date}</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Users className="w-4 h-4" />
+            <span>{event.attendees}</span>
+          </div>
         </div>
       </div>
     </div>
