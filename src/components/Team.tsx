@@ -239,7 +239,7 @@ export default function Team() {
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-4">
-            Execom 2025
+            Execom 2026
           </h2>
 
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">

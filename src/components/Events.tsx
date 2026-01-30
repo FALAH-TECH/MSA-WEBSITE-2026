@@ -9,39 +9,61 @@ const featuredEvent = {
   location: 'ONLINE : VIA GMEET',
   attendees: '80+',
   description:
-    'An introductory webinar designed for first-year students to explore the fundamentals of cybersecurity and ethical hacking, understand real-world security threats, and learn how digital systems are protected in today’s connected world.',
+    'An introductory webinar for beginners covering cybersecurity fundamentals, ethical hacking basics, real-world threats, and how modern digital systems are protected.',
   tags: ['Cybersecurity', 'Ethical Hacking', 'Digital Safety'],
   status: 'Upcoming',
 };
 
 const pastEvents = [
   {
-    title: "MSA CARNIVAL",
-    date: "Aug 10, 2025",
-    attendees: "95",
-    reelUrl: "https://www.instagram.com/reel/DNbIJUyyg1o/",
-    posterUrl: "https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=300",
+    title: 'MSA CARNIVAL',
+    date: 'Aug 10, 2025',
+    venue: 'OpenMind Makerspace',
+    attendees: '95+ participants',
+    description:
+      'MSA Carnival ’25 was an interactive tech carnival featuring hands-on workshops, talks, and challenges focused on practical development skills, Microsoft tools, and collaborative learning.',
+    reelUrl: 'https://www.instagram.com/reel/DNbIJUyyg1o/',
+    imageUrl: '/EVENTS/CARNIVAL.jpg',
   },
   {
-    title: "POP & PITCH",
-    date: "Sep 19, 2025",
-    attendees: "60",
-    reelUrl: "https://www.instagram.com/reel/DO_QorQksFg/",
-    posterUrl: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=300",
+    title: 'POP & PITCH',
+    date: 'Sep 19, 2025',
+    venue: 'Innovation Lab, LBSCEK',
+    attendees: '60+ participants',
+    description:
+      'POP & PITCH was a high-energy creativity challenge where students used Microsoft 365 tools to turn ideas into impactful campaigns through hands-on design, teamwork, and confident pitching.',
+    reelUrl: 'https://www.instagram.com/reel/DO_QorQksFg/',
+    imageUrl: '/EVENTS/DESIGN.jpg',
   },
   {
-    title: "TECH ENHANCED VISION",
-    date: "Dec 22, 2025",
-    attendees: "20",
-    reelUrl: "https://www.instagram.com/reel/DSp7_AAEnv3/",
-    posterUrl: "https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=300",
+    title: 'TECH ENHANCED VISION',
+    date: 'Dec 22, 2025',
+    venue: 'Seminar Hall, LBSCEK',
+    attendees: '20+ participants',
+    description:
+      'Tech-Enhanced Vision focused on accessibility and inclusion, showcasing how thoughtful technology can empower the visually impaired and create more inclusive digital experiences.',
+    reelUrl: 'https://www.instagram.com/reel/DSp7_AAEnv3/',
+    imageUrl: '/EVENTS/TECHENCD.jpg',
   },
   {
-    title: "TECHLAUGHS - THECOMSHOW",
-    date: "Dec 22, 2025",
-    attendees: "100+",
-    reelUrl: "https://www.instagram.com/reel/DStwbcHEnL3/",
-    posterUrl: "https://images.pexels.com/photos/3945632/pexels-photo-3945632.jpeg?auto=compress&cs=tinysrgb&w=300",
+    title: 'TECHLAUGHS - THECOMSHOW',
+    date: 'Dec 22, 2025',
+    venue: 'Auditorium, LBSCEK',
+    attendees: '100+ participants',
+    description:
+      'TechLaughs at IEDC Summit 2025 delivered high-energy humor and nonstop laughter, serving as a perfect stress-buster that refreshed minds and uplifted campus spirits..',
+    reelUrl: 'https://www.instagram.com/reel/DStwbcHEnL3/',
+    imageUrl: '/EVENTS/TECHLAUGH.jpg',
+  },
+  {
+    title: 'Power Up Your Code',
+    date: 'Aug 10, 2025',
+    venue: 'OpenMind Makerspace',
+    attendees: '30+ participants',
+    description:
+      'APower Up Your Code was a hands-on workshop introducing essential Microsoft tools, helping students boost coding productivity, practical skills, and real-world development efficiency.',
+    reelUrl: 'https://www.instagram.com/p/DNJGoqcSgbr/',
+    imageUrl: '/EVENTS/POWERUP.jpg',
   },
 ];
 
@@ -169,58 +191,74 @@ export default function Events() {
             Past Events
           </h3>
 
-          <div className="space-y-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
             {pastEvents.map((event, index) => (
-  <motion.a
-    key={event.title}
-    href={event.reelUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    initial={{ opacity: 0, x: -20 }}
-    animate={isInView ? { opacity: 1, x: 0 } : {}}
-    transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-    className="group relative block"
-    whileHover={{ scale: 1.01 }}
-    whileTap={{ scale: 0.99 }}
-  >
-    <div className="flex flex-col lg:flex-row lg:items-center gap-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0078D4]/50 transition-all duration-300">
-      <div className="flex-shrink-0 w-full lg:w-24 h-40 lg:h-24 rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-md">
-        <img
-          src={event.posterUrl}
-          alt={event.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-      </div>
+              <motion.a
+                key={event.title}
+                href={event.reelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 24 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                className="group relative flex flex-col rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 via-transparent to-transparent opacity-80 pointer-events-none" />
+                  <img
+                    src={event.imageUrl}
+                    alt={event.title}
+                    loading="lazy"
+                    className="w-full aspect-[3/4] object-cover transform transition-transform duration-500 ease-out group-hover:scale-105 filter grayscale-[0.3] group-hover:grayscale-0 opacity-90 group-hover:opacity-100"
+                  />
 
-      <div className="flex items-center space-x-4 flex-1 min-w-0">
-        <div className="hidden md:block w-2 h-2 rounded-full bg-[#0078D4]" />
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/60 border border-white/15 text-[11px] font-semibold uppercase tracking-wide text-gray-200 backdrop-blur-sm">
+                      Past Event
+                    </span>
+                  </div>
 
-        <div className="flex-1 min-w-0">
-          <h4 className="text-lg font-semibold text-white group-hover:text-[#50A0E8] transition-colors truncate">
-            {event.title}
-          </h4>
-          <p className="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            View Instagram Reel →
-          </p>
-        </div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-gray-300">
+                    <div className="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm">
+                      <Calendar className="w-3 h-3" />
+                      <span className="truncate">{event.date}</span>
+                    </div>
+                    <div className="hidden sm:inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm">
+                      <Users className="w-3 h-3" />
+                      <span className="truncate">{event.attendees}</span>
+                    </div>
+                  </div>
+                </div>
 
-        <div className="flex items-center space-x-6 text-gray-400 text-sm flex-shrink-0">
-          <div className="flex items-center space-x-2">
-            <Calendar className="w-4 h-4" />
-            <span className="hidden sm:inline">{event.date}</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Users className="w-4 h-4" />
-            <span>{event.attendees}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+                <div className="flex flex-col flex-1 p-5 md:p-6">
+                  <div className="mb-3">
+                    <h4 className="text-lg font-semibold text-white tracking-tight mb-1 group-hover:text-[#50A0E8] transition-colors">
+                      {event.title}
+                    </h4>
+                    <p className="text-xs text-gray-400">
+                      {event.venue}
+                    </p>
+                  </div>
 
-    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#0078D4] to-[#50A0E8] opacity-0 group-hover:opacity-100 transition-opacity rounded-l-xl" />
-  </motion.a>
-))}
+                  <p className="text-sm text-gray-400 leading-relaxed line-clamp-3 mb-4">
+                    {event.description}
+                  </p>
 
+                  <div className="mt-auto pt-2 flex items-center justify-between text-sm">
+                    <span className="text-[11px] uppercase tracking-wide text-gray-500">
+                      Event concluded
+                    </span>
+
+                    <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-lg bg-[#1a2335] text-[#8ab4ff] border border-white/5 group-hover:bg-[#0078D4]/10 group-hover:text-[#50A0E8] group-hover:border-[#0078D4]/60 transition-colors text-xs font-medium">
+                      <span>View Highlights</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </div>
+              </motion.a>
+            ))}
           </div>
         </motion.div>
       </div>

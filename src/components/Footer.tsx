@@ -65,7 +65,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            © 2025 Microsoft Learn Student Ambassadors LBSCEK. All rights reserved.
+            © 2025 Microsoft Student Ambassadors LBSCEK. All rights reserved.
           </p>
 
           {/* Social links */}
@@ -95,16 +95,7 @@ export default function Footer() {
               <Linkedin className="w-5 h-5" />
             </motion.a>
 
-            {/* Optional GitHub (remove if not needed) */}
-            <motion.a
-              href="#"
-              aria-label="GitHub"
-              className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#0078D4] hover:border-[#0078D4] transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Github className="w-5 h-5" />
-            </motion.a>
+            
 
           </div>
         </div>
