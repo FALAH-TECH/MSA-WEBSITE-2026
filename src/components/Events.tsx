@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Calendar, Users, ExternalLink } from 'lucide-react';
-import { MotionItem, MotionSection, useReducedMotion } from './Motion';
+import { MotionItem, SectionWrapper, AnimatedHeading, useReducedMotion } from './Motion';
 
 export type EventItem = {
   title: string;
@@ -113,14 +113,14 @@ function EventCard({
   const href = event.status === 'past' ? (event.reelUrl ?? event.registerUrl) : event.registerUrl;
 
   return (
-    <MotionItem index={index} staggerDelay={0.08} yOffset={24}>
+    <MotionItem index={index} staggerDelay={0.12} yOffset={35} scaleFrom={0.95}>
       <motion.a
         href={href ?? '#'}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex flex-col rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full"
-        whileHover={reduceMotion ? undefined : { y: -4, scale: 1.02 }}
-        whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+        className="group relative flex flex-col rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/15 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-full cursor-pointer"
+        whileHover={reduceMotion ? undefined : { y: -12, scale: 1.06 }}
+        whileTap={reduceMotion ? undefined : { scale: 0.97 }}
       >
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 via-transparent to-transparent opacity-80 pointer-events-none" />
@@ -190,11 +190,11 @@ function EventsGrid({
 
   return (
     <>
-      <h3 className="text-2xl font-bold text-white mb-8 tracking-tight">
+      <AnimatedHeading level="h3" className="text-2xl font-bold text-white tracking-tight">
         {title}
-      </h3>
+      </AnimatedHeading>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+      <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr mt-12">
         {events.map((event, index) => (
           <EventCard
             key={event.title + event.date}
@@ -209,32 +209,41 @@ function EventsGrid({
 
 export default function Events() {
   return (
-    <section
+    <SectionWrapper
       id="events"
-      className="relative py-32 bg-gradient-to-b from-[#050810] to-[#0a0f1e]"
+      className="relative py-40 bg-gradient-to-b from-[#050810] via-[#0a1628]/80 to-[#050810]"
     >
+      {/* Subtle top accent line for visual intent */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#0078D4]/40 to-transparent" />
+
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <MotionSection className="text-center mb-16" slideOffset={20}>
-          <div className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/20 mb-6">
-            <span className="text-[#50A0E8] font-medium text-sm tracking-wide">
+        <motion.div
+          className="text-center mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <div className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/30 mb-8 backdrop-blur-sm">
+            <span className="text-[#50A0E8] font-semibold text-xs tracking-widest">
               EVENTS & WORKSHOPS
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
             Learn. Build. Connect.
           </h2>
-        </MotionSection>
+        </motion.div>
 
         {upcomingEvents.length > 0 && (
-          <div className="mb-20">
+          <div className="mb-24">
             <EventsGrid title="Upcoming Events" events={upcomingEvents} />
           </div>
         )}
 
-        <div className={upcomingEvents.length > 0 ? 'mt-16' : ''}>
+        <div className={upcomingEvents.length > 0 ? 'mt-20' : ''}>
           <EventsGrid title="Past Events" events={pastEvents} />
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

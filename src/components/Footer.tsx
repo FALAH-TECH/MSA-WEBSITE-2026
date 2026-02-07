@@ -1,9 +1,13 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin, Instagram, Linkedin } from "lucide-react";
+import { SectionWrapper } from "./Motion";
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative bg-[#050810] border-t border-white/10">
+    <SectionWrapper
+      id="contact"
+      className="relative bg-[#050810] border-t border-white/10"
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
 
         {/* Top section */}
@@ -100,6 +104,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+    </SectionWrapper>
   );
 }

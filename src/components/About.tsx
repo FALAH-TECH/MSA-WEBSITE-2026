@@ -1,5 +1,6 @@
+import { motion } from 'framer-motion';
 import { Code2, Cloud, TrendingUp, Globe } from 'lucide-react';
-import { MotionItem, MotionSection } from './Motion';
+import { MotionItem, SectionWrapper } from './Motion';
 
 const highlights = [
   { icon: Code2, title: 'Learn by building', description: 'Hands-on projects and workshops' },
@@ -10,10 +11,18 @@ const highlights = [
 
 export default function About() {
   return (
-    <section id="about" className="relative py-32 bg-[#050810]">
+    <SectionWrapper
+      id="about"
+      className="relative py-32 bg-[#050810]"
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <MotionSection className="" slideOffset={24}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <div className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/20 mb-6">
               <span className="text-[#50A0E8] font-medium text-sm tracking-wide">
                 ABOUT MSA
@@ -35,12 +44,15 @@ export default function About() {
             <p className="text-lg text-gray-400 leading-relaxed">
               MSA (Microsoft Learn Student Ambassadors) is an MNC-approved global student community directly run by Microsoft, one of the world's biggest multinational tech companies.
             </p>
-          </MotionSection>
+          </motion.div>
 
           <div className="space-y-6">
             {highlights.map((highlight, index) => (
-              <MotionItem key={highlight.title} index={index} staggerDelay={0.1} yOffset={20}>
-                <div className="group flex items-start space-x-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0078D4]/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+              <MotionItem key={highlight.title} index={index} staggerDelay={0.12} yOffset={25}>
+                <motion.div
+                  className="group flex items-start space-x-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0078D4]/50 hover:shadow-lg transition-all duration-300"
+                  whileHover={{ y: -4, scale: 1.02 }}
+                >
                   <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-[#0078D4] to-[#50A0E8] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <highlight.icon className="w-6 h-6 text-white" />
                   </div>
@@ -50,7 +62,7 @@ export default function About() {
                     </h3>
                     <p className="text-gray-400">{highlight.description}</p>
                   </div>
-                </div>
+                </motion.div>
               </MotionItem>
             ))}
           </div>
@@ -58,6 +70,6 @@ export default function About() {
       </div>
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(0,120,212,0.05),transparent_50%)] pointer-events-none" />
-    </section>
+    </SectionWrapper>
   );
 }

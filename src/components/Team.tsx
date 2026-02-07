@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Instagram, Linkedin, Mail } from "lucide-react";
-import { MotionItem, MotionSection, useReducedMotion } from "./Motion";
+import { MotionItem, SectionWrapper, useReducedMotion } from "./Motion";
 
 type TeamMember = {
   name: string;
@@ -219,9 +219,18 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
 
 export default function Team() {
   return (
-    <section id="team" className="relative py-28 bg-[#050810]">
+    <SectionWrapper
+      id="team"
+      className="relative py-28 bg-[#050810]"
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <MotionSection className="text-center mb-14" slideOffset={16}>
+        <motion.div
+          className="text-center mb-14"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <div className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/20 mb-6">
             <span className="text-[#50A0E8] font-medium text-sm tracking-wide">
               MEET THE TEAM
@@ -236,7 +245,7 @@ export default function Team() {
             The passionate team behind MSA LBSCEK, dedicated to building a thriving
             tech community.
           </p>
-        </MotionSection>
+        </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {teamMembers.map((member, index) => (
@@ -247,6 +256,6 @@ export default function Team() {
 
       {/* Background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(80,160,232,0.06),transparent_55%)] pointer-events-none" />
-    </section>
+    </SectionWrapper>
   );
 }

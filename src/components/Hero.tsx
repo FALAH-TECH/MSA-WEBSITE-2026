@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { useReducedMotion } from './Motion/useReducedMotion';
+import { useReducedMotion } from './Motion';
 
 export default function Hero() {
   const reduceMotion = useReducedMotion();
@@ -30,6 +30,7 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24">
         <div className="text-center">
+          {/* Badge fade + slide */}
           <motion.div
             initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -43,10 +44,14 @@ export default function Hero() {
             <span className="text-gray-400 text-sm">LBSCEK</span>
           </motion.div>
 
+          {/* Main heading with staggered character animation */}
           <motion.h1
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.25 : 0.5, delay: reduceMotion ? 0 : 0.08 }}
+            initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: reduceMotion ? 0.3 : 0.6,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
             className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight leading-none"
           >
             Backed by Microsoft
@@ -56,10 +61,14 @@ export default function Hero() {
             </span>
           </motion.h1>
 
+          {/* Subheading fade + slide */}
           <motion.p
             initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.25 : 0.5, delay: reduceMotion ? 0 : 0.16 }}
+            transition={{
+              duration: reduceMotion ? 0.25 : 0.5,
+              delay: reduceMotion ? 0 : 0.2,
+            }}
             className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed"
           >
             We build student developers through workshops, projects, and
