@@ -1,6 +1,7 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { Instagram, Linkedin, Mail } from "lucide-react";
+import { MotionItem, MotionSection, useReducedMotion } from "./Motion";
 
 type TeamMember = {
   name: string;
@@ -156,25 +157,22 @@ function SocialIconButton({
 
 function TeamCard({ member, index }: { member: TeamMember; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
-
+  const reduceMotion = useReducedMotion();
   const emailHref = member.socials?.email ? `mailto:${member.socials.email}` : "";
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, delay: index * 0.08 }}
-      className="group relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-all duration-300">
+    <MotionItem index={index} staggerDelay={0.08} yOffset={24}>
+      <div
+        className="group relative"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
         <img
           src={member.image}
           alt={member.name}
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className={`w-full h-full object-cover transition-transform duration-500 ${reduceMotion ? '' : 'group-hover:scale-105'}`}
         />
 
         {/* Dark overlay */}
@@ -214,24 +212,16 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
           </SocialIconButton>
         </motion.div>
       </div>
-    </motion.div>
+    </div>
+    </MotionItem>
   );
 }
 
 export default function Team() {
-  const ref = useRef<HTMLElement | null>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="team" className="relative py-28 bg-[#050810]" ref={ref as any}>
+    <section id="team" className="relative py-28 bg-[#050810]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
-        >
+        <MotionSection className="text-center mb-14" slideOffset={16}>
           <div className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/20 mb-6">
             <span className="text-[#50A0E8] font-medium text-sm tracking-wide">
               MEET THE TEAM
@@ -246,9 +236,8 @@ export default function Team() {
             The passionate team behind MSA LBSCEK, dedicated to building a thriving
             tech community.
           </p>
-        </motion.div>
+        </MotionSection>
 
-        {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {teamMembers.map((member, index) => (
             <TeamCard key={member.name} member={member} index={index} />

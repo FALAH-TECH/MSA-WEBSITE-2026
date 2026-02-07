@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useReducedMotion } from './Motion/useReducedMotion';
 
 const navLinks = [
   { name: 'About', href: '#about' },
@@ -13,6 +14,7 @@ const navLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,9 +26,9 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : -24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: reduceMotion ? 0.2 : 0.5, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-[#050810]/80 backdrop-blur-xl border-b border-white/10'
@@ -66,21 +68,23 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 className="px-4 py-2 text-gray-300 hover:text-white transition-colors relative group"
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: reduceMotion ? 0 : -12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.2 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                transition={{ delay: reduceMotion ? 0 : index * 0.06 + 0.15, duration: 0.4 }}
+                whileHover={reduceMotion ? undefined : { scale: 1.05 }}
+                whileTap={reduceMotion ? undefined : { scale: 0.95 }}
               >
                 <span className="relative z-10 font-medium tracking-tight">
                   {link.name}
                 </span>
-                <motion.div
-                  className="absolute inset-0 bg-white/5 rounded-lg"
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileHover={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                />
+                {!reduceMotion && (
+                  <motion.div
+                    className="absolute inset-0 bg-white/5 rounded-lg"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileHover={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  />
+                )}
               </motion.a>
             ))}
           </div>

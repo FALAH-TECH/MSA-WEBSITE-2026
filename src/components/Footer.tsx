@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, MapPin, Instagram, Linkedin, Github } from "lucide-react";
+import { Mail, MapPin, Instagram, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
