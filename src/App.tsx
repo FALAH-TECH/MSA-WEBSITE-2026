@@ -9,12 +9,7 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 100, scale: 0.9 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 1 }}
-      style={{ background: "#ffecec" }} // visible background test
-    >
+    <div className="min-h-screen bg-[#0b1220] text-white overflow-x-hidden">
       <Navbar />
       <Hero />
       <About />
@@ -22,8 +17,9 @@ function App() {
       <Team />
       <Join />
       <Footer />
-    </motion.div>
+    </div>
   );
 }
+
 
 export default App;

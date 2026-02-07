@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { Instagram, Linkedin, Mail } from "lucide-react";
-import { MotionItem, SectionWrapper, useReducedMotion, motionConfig, scrollReveal } from "./Motion";
+import {
+  MotionItem,
+  SectionWrapper,
+  useReducedMotion,
+  motionConfig,
+  scrollReveal,
+} from "./Motion";
 
 type TeamMember = {
   name: string;
@@ -19,111 +24,67 @@ const teamMembers: TeamMember[] = [
     name: "Thanseeha Nasrin P M",
     role: "Campus Lead",
     image: "/Team/thanseeha.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "Aysha Bahjath",
     role: "Campus Co-Lead",
     image: "/Team/aysha-bahjath.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "Fathimath Shirin Sana C A",
     role: "Outreach Lead",
     image: "/Team/shirin.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "Chandhana Rajesh",
     role: "Outreach Co-Lead",
     image: "/Team/chandhana.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "Falah Muhammed Fazal",
     role: "Tech Lead",
     image: "/Team/falah.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "Hana M K",
     role: "Creative & Design Lead",
     image: "/Team/hana.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "Khadeejath Shahama Parveen",
     role: "Media Lead",
     image: "/Team/shahama.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "Fayiza H",
     role: "Strategy Lead",
     image: "/Team/fayiza.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "Karthika Santosh",
     role: "Content Lead",
     image: "/Team/karthika.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "Limna K",
     role: "Content Co-Lead",
     image: "/Team/limna.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
   {
     name: "HAJARA RANA NK",
     role: "Strategy Co-Lead",
     image: "/Team/rana.jpg",
-    socials: {
-      instagram: "",
-      linkedin: "",
-      email: "",
-    },
+    socials: { instagram: "", linkedin: "", email: "" },
   },
 ];
 
@@ -136,7 +97,6 @@ function SocialIconButton({
   children: React.ReactNode;
   label: string;
 }) {
-  // If href is empty, don’t render button (prevents # junk)
   if (!href) return null;
 
   const isMail = href.startsWith("mailto:");
@@ -149,9 +109,10 @@ function SocialIconButton({
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
       className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-[#0078D4] hover:border-[#0078D4] transition-colors"
-      whileHover={{ scale: 1.1, y: -2 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ duration: motionConfig.hoverDuration }}
+      style={{ willChange: "transform" }}
+      whileHover={{ y: -2, scale: 1.08 }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: "spring", stiffness: 350, damping: 22 }}
     >
       {children}
     </motion.a>
@@ -159,65 +120,54 @@ function SocialIconButton({
 }
 
 function TeamCard({ member, index }: { member: TeamMember; index: number }) {
-  const [isHovered, setIsHovered] = useState(false);
   const reduceMotion = useReducedMotion();
   const emailHref = member.socials?.email ? `mailto:${member.socials.email}` : "";
 
   return (
-    <MotionItem index={index} staggerDelay={motionConfig.cardStagger} yOffset={24}>
-      <div
-        className="group relative"
-        onMouseEnter={() => !reduceMotion && setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+    <MotionItem index={index} staggerDelay={motionConfig.cardStagger} yOffset={22}>
+      <div className="group relative">
         <motion.div
-          className="relative aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-all duration-300 shadow-lg hover:shadow-2xl"
-          whileHover={!reduceMotion ? { y: -6 } : undefined}
-          transition={{ duration: motionConfig.hoverDuration }}
+          className="relative aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-colors duration-300 shadow-lg hover:shadow-xl"
+          style={{ willChange: "transform" }}
+          whileHover={!reduceMotion ? { y: -8, scale: 1.02 } : undefined}
+          whileTap={!reduceMotion ? { scale: 0.99 } : undefined}
+          transition={!reduceMotion ? { type: "spring", stiffness: 260, damping: 22 } : undefined}
         >
-        <img
-          src={member.image}
-          alt={member.name}
-          loading="lazy"
-          className={`w-full h-full object-cover transition-transform duration-500 ${!reduceMotion && 'group-hover:scale-105'}`}
-        />
+          <img
+            src={member.image}
+            alt={member.name}
+            loading="lazy"
+            className={`w-full h-full object-cover transition-transform duration-500 ${
+              !reduceMotion ? "group-hover:scale-105" : ""
+            }`}
+          />
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050810] via-[#050810]/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050810] via-[#050810]/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
-        {/* Name + Role */}
-        <div className="absolute bottom-0 left-0 right-0 p-6">
-          <h3 className="text-xl font-bold text-white mb-1 tracking-tight">
-            {member.name}
-          </h3>
-          <p className="text-[#50A0E8] text-sm font-medium">{member.role}</p>
-        </div>
+          {/* Name + Role */}
+          <div className="absolute bottom-0 left-0 right-0 p-6">
+            <h3 className="text-xl font-bold text-white mb-1 tracking-tight">{member.name}</h3>
+            <p className="text-[#50A0E8] text-sm font-medium">{member.role}</p>
+          </div>
 
-        {/* Socials (only appear on hover) */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-          transition={{ duration: motionConfig.duration.fast }}
-          className="absolute top-4 right-4 flex flex-col space-y-2"
-        >
-          <SocialIconButton
-            href={member.socials?.instagram || ""}
-            label={`${member.name} Instagram`}
+          {/* Socials (no state; shows on hover) */}
+          <motion.div
+            className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+            style={{ willChange: "transform, opacity" }}
           >
-            <Instagram className="w-5 h-5 text-white" />
-          </SocialIconButton>
+            <SocialIconButton href={member.socials?.instagram || ""} label={`${member.name} Instagram`}>
+              <Instagram className="w-5 h-5 text-white" />
+            </SocialIconButton>
 
-          <SocialIconButton
-            href={member.socials?.linkedin || ""}
-            label={`${member.name} LinkedIn`}
-          >
-            <Linkedin className="w-5 h-5 text-white" />
-          </SocialIconButton>
+            <SocialIconButton href={member.socials?.linkedin || ""} label={`${member.name} LinkedIn`}>
+              <Linkedin className="w-5 h-5 text-white" />
+            </SocialIconButton>
 
-          <SocialIconButton href={emailHref} label={`${member.name} Email`}>
-            <Mail className="w-5 h-5 text-white" />
-          </SocialIconButton>
-        </motion.div>
+            <SocialIconButton href={emailHref} label={`${member.name} Email`}>
+              <Mail className="w-5 h-5 text-white" />
+            </SocialIconButton>
+          </motion.div>
         </motion.div>
       </div>
     </MotionItem>
@@ -226,10 +176,7 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
 
 export default function Team() {
   return (
-    <SectionWrapper
-      id="team"
-      className="relative py-28 bg-[#050810]"
-    >
+    <SectionWrapper id="team" className="relative py-28 bg-[#050810]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           className="text-center mb-14"
@@ -237,17 +184,17 @@ export default function Team() {
           whileInView={scrollReveal.whileInView}
           viewport={scrollReveal.viewport}
           transition={{ duration: motionConfig.sectionEntry.duration, ease: motionConfig.premiumEasing }}
+          style={{ willChange: "transform, opacity" }}
         >
           <motion.div
             className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/20 mb-6"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: motionConfig.duration.normal }}
+            transition={{ duration: motionConfig.duration.normal, ease: motionConfig.premiumEasing }}
+            style={{ willChange: "transform, opacity" }}
           >
-            <span className="text-[#50A0E8] font-medium text-sm tracking-wide">
-              MEET THE TEAM
-            </span>
+            <span className="text-[#50A0E8] font-medium text-sm tracking-wide">MEET THE TEAM</span>
           </motion.div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-4">
@@ -255,8 +202,7 @@ export default function Team() {
           </h2>
 
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-            The passionate team behind MSA LBSCEK, dedicated to building a thriving
-            tech community.
+            The passionate team behind MSA LBSCEK, dedicated to building a thriving tech community.
           </p>
         </motion.div>
 

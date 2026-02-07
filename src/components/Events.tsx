@@ -1,6 +1,13 @@
-import { motion } from 'framer-motion';
-import { Calendar, Users, ExternalLink } from 'lucide-react';
-import { MotionItem, SectionWrapper, AnimatedHeading, useReducedMotion, motionConfig, scrollReveal } from './Motion';
+import { motion } from "framer-motion";
+import { Calendar, Users, ExternalLink } from "lucide-react";
+import {
+  MotionItem,
+  SectionWrapper,
+  AnimatedHeading,
+  useReducedMotion,
+  motionConfig,
+  scrollReveal,
+} from "./Motion";
 
 export type EventItem = {
   title: string;
@@ -13,7 +20,7 @@ export type EventItem = {
   imageUrl: string;
   reelUrl?: string;
   registerUrl?: string;
-  status: 'upcoming' | 'past';
+  status: "upcoming" | "past";
   tags?: string[];
   time?: string;
 };
@@ -21,150 +28,130 @@ export type EventItem = {
 // All events in one list; we split by status and sort
 const allEvents: EventItem[] = [
   {
-    title: 'Getting Started with Cybersecurity & Ethical Hacking',
-    date: 'Feb 5, 2026',
-    dateSortKey: '2026-02-05',
-    venue: 'ONLINE : VIA GMEET',
-    attendees: '80+ participants',
+    title: "Getting Started with Cybersecurity & Ethical Hacking",
+    date: "Feb 5, 2026",
+    dateSortKey: "2026-02-05",
+    venue: "ONLINE : VIA GMEET",
+    attendees: "80+ participants",
     description:
-      'An introductory webinar for beginners covering cybersecurity fundamentals, ethical hacking basics, real-world threats, and how modern digital systems are protected.',
-    imageUrl: '/EVENTS/cybersecurity.jpg',
-    registerUrl: 'https://v0-cybersecurity-webinar.vercel.app/',
-    status: 'past',
-    tags: ['Cybersecurity', 'Ethical Hacking', 'Digital Safety'],
+      "An introductory webinar for beginners covering cybersecurity fundamentals, ethical hacking basics, real-world threats, and how modern digital systems are protected.",
+    imageUrl: "/EVENTS/cybersecurity.jpg",
+    registerUrl: "https://v0-cybersecurity-webinar.vercel.app/",
+    status: "past",
+    tags: ["Cybersecurity", "Ethical Hacking", "Digital Safety"],
   },
   {
-    title: 'MSA CARNIVAL',
-    date: 'Aug 10, 2025',
-    dateSortKey: '2025-08-10',
-    venue: 'OpenMind Makerspace',
-    attendees: '95+ participants',
+    title: "MSA CARNIVAL",
+    date: "Aug 10, 2025",
+    dateSortKey: "2025-08-10",
+    venue: "OpenMind Makerspace",
+    attendees: "95+ participants",
     description:
-      'MSA Carnival \'25 was an interactive tech carnival featuring hands-on workshops, talks, and challenges focused on practical development skills, Microsoft tools, and collaborative learning.',
-    reelUrl: 'https://www.instagram.com/reel/DNbIJUyyg1o/',
-    imageUrl: '/EVENTS/CARNIVAL.jpg',
-    status: 'past',
+      "MSA Carnival '25 was an interactive tech carnival featuring hands-on workshops, talks, and challenges focused on practical development skills, Microsoft tools, and collaborative learning.",
+    reelUrl: "https://www.instagram.com/reel/DNbIJUyyg1o/",
+    imageUrl: "/EVENTS/CARNIVAL.jpg",
+    status: "past",
   },
   {
-    title: 'POP & PITCH',
-    date: 'Sep 19, 2025',
-    dateSortKey: '2025-09-19',
-    venue: 'Innovation Lab, LBSCEK',
-    attendees: '60+ participants',
+    title: "POP & PITCH",
+    date: "Sep 19, 2025",
+    dateSortKey: "2025-09-19",
+    venue: "Innovation Lab, LBSCEK",
+    attendees: "60+ participants",
     description:
-      'POP & PITCH was a high-energy creativity challenge where students used Microsoft 365 tools to turn ideas into impactful campaigns through hands-on design, teamwork, and confident pitching.',
-    reelUrl: 'https://www.instagram.com/reel/DO_QorQksFg/',
-    imageUrl: '/EVENTS/DESIGN.jpg',
-    status: 'past',
+      "POP & PITCH was a high-energy creativity challenge where students used Microsoft 365 tools to turn ideas into impactful campaigns through hands-on design, teamwork, and confident pitching.",
+    reelUrl: "https://www.instagram.com/reel/DO_QorQksFg/",
+    imageUrl: "/EVENTS/DESIGN.jpg",
+    status: "past",
   },
   {
-    title: 'TECH ENHANCED VISION',
-    date: 'Dec 22, 2025',
-    dateSortKey: '2025-12-22',
-    venue: 'Seminar Hall, LBSCEK',
-    attendees: '20+ participants',
+    title: "TECH ENHANCED VISION",
+    date: "Dec 22, 2025",
+    dateSortKey: "2025-12-22",
+    venue: "Seminar Hall, LBSCEK",
+    attendees: "20+ participants",
     description:
-      'Tech-Enhanced Vision focused on accessibility and inclusion, showcasing how thoughtful technology can empower the visually impaired and create more inclusive digital experiences.',
-    reelUrl: 'https://www.instagram.com/reel/DSp7_AAEnv3/',
-    imageUrl: '/EVENTS/TECHENCD.jpg',
-    status: 'past',
+      "Tech-Enhanced Vision focused on accessibility and inclusion, showcasing how thoughtful technology can empower the visually impaired and create more inclusive digital experiences.",
+    reelUrl: "https://www.instagram.com/reel/DSp7_AAEnv3/",
+    imageUrl: "/EVENTS/TECHENCD.jpg",
+    status: "past",
   },
   {
-    title: 'TECHLAUGHS - THECOMSHOW',
-    date: 'Dec 22, 2025',
-    dateSortKey: '2025-12-22',
-    venue: 'Auditorium, LBSCEK',
-    attendees: '100+ participants',
+    title: "TECHLAUGHS - THECOMSHOW",
+    date: "Dec 22, 2025",
+    dateSortKey: "2025-12-22",
+    venue: "Auditorium, LBSCEK",
+    attendees: "100+ participants",
     description:
-      'TechLaughs at IEDC Summit 2025 delivered high-energy humor and nonstop laughter, serving as a perfect stress-buster that refreshed minds and uplifted campus spirits.',
-    reelUrl: 'https://www.instagram.com/reel/DStwbcHEnL3/',
-    imageUrl: '/EVENTS/TECHLAUGH.jpg',
-    status: 'past',
+      "TechLaughs at IEDC Summit 2025 delivered high-energy humor and nonstop laughter, serving as a perfect stress-buster that refreshed minds and uplifted campus spirits.",
+    reelUrl: "https://www.instagram.com/reel/DStwbcHEnL3/",
+    imageUrl: "/EVENTS/TECHLAUGH.jpg",
+    status: "past",
   },
   {
-    title: 'Power Up Your Code',
-    date: 'Aug 10, 2025',
-    dateSortKey: '2025-08-10',
-    venue: 'OpenMind Makerspace',
-    attendees: '30+ participants',
+    title: "Power Up Your Code",
+    date: "Aug 10, 2025",
+    dateSortKey: "2025-08-10",
+    venue: "OpenMind Makerspace",
+    attendees: "30+ participants",
     description:
-      'Power Up Your Code was a hands-on workshop introducing essential Microsoft tools, helping students boost coding productivity, practical skills, and real-world development efficiency.',
-    reelUrl: 'https://www.instagram.com/p/DNJGoqcSgbr/',
-    imageUrl: '/EVENTS/POWERUP.jpg',
-    status: 'past',
+      "Power Up Your Code was a hands-on workshop introducing essential Microsoft tools, helping students boost coding productivity, practical skills, and real-world development efficiency.",
+    reelUrl: "https://www.instagram.com/p/DNJGoqcSgbr/",
+    imageUrl: "/EVENTS/POWERUP.jpg",
+    status: "past",
   },
 ];
 
-const upcomingEvents = [...allEvents.filter((e) => e.status === 'upcoming')].sort(
-  (a, b) => a.dateSortKey.localeCompare(b.dateSortKey)
+const upcomingEvents = [...allEvents.filter((e) => e.status === "upcoming")].sort((a, b) =>
+  a.dateSortKey.localeCompare(b.dateSortKey)
 );
-const pastEvents = [...allEvents.filter((e) => e.status === 'past')].sort(
-  (a, b) => b.dateSortKey.localeCompare(a.dateSortKey)
+const pastEvents = [...allEvents.filter((e) => e.status === "past")].sort((a, b) =>
+  b.dateSortKey.localeCompare(a.dateSortKey)
 );
 
-function EventCard({
-  event,
-  index,
-}: {
-  event: EventItem;
-  index: number;
-}) {
+function EventCard({ event, index }: { event: EventItem; index: number }) {
   const reduceMotion = useReducedMotion();
-  const href = event.status === 'past' ? (event.reelUrl ?? event.registerUrl) : event.registerUrl;
+  const href = event.status === "past" ? event.reelUrl ?? event.registerUrl : event.registerUrl;
 
   return (
-    <MotionItem index={index} staggerDelay={motionConfig.cardStagger} yOffset={35} scaleFrom={0.95}>
+    <MotionItem index={index} staggerDelay={motionConfig.cardStagger} yOffset={35} scaleFrom={0.97}>
       <motion.a
-        href={href ?? '#'}
+        href={href ?? "#"}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex flex-col rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/15 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 h-full cursor-pointer"
-        whileHover={!reduceMotion ? { y: -12, scale: 1.06 } : undefined}
-        whileTap={!reduceMotion ? { scale: 0.97 } : undefined}
-        transition={{ duration: motionConfig.hoverDuration }}
+        className="group relative flex flex-col rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/15 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full cursor-pointer"
+        style={{ willChange: "transform" }}
+        whileHover={!reduceMotion ? { y: -8, scale: 1.03 } : undefined}
+        whileTap={!reduceMotion ? { scale: 0.985 } : undefined}
+        transition={!reduceMotion ? { type: "spring", stiffness: 260, damping: 22 } : undefined}
       >
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 via-transparent to-transparent opacity-80 pointer-events-none" />
+
           <img
             src={event.imageUrl}
             alt={event.title}
             loading="lazy"
-            className="w-full aspect-[3/4] object-cover transform transition-transform duration-500 ease-out group-hover:scale-105 filter grayscale-[0.3] group-hover:grayscale-0 opacity-90 group-hover:opacity-100"
+            className="w-full aspect-[3/4] object-cover transform transition-transform duration-500 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
           />
 
-          <motion.div
-            className="absolute top-3 left-3"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ delay: index * 0.1, duration: motionConfig.duration.normal }}
-          >
+          {/* Keep these STATIC (no whileInView) — MotionItem already animates the card in */}
+          <div className="absolute top-3 left-3">
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/60 border border-white/15 text-[11px] font-semibold uppercase tracking-wide text-gray-200 backdrop-blur-sm">
-              {event.status === 'past' ? 'Past Event' : 'Upcoming'}
+              {event.status === "past" ? "Past Event" : "Upcoming"}
             </span>
-          </motion.div>
+          </div>
 
           <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-gray-300">
-            <motion.div
-              className="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ delay: index * 0.1 + 0.1, duration: motionConfig.duration.normal }}
-            >
+            <div className="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm">
               <Calendar className="w-3 h-3" />
               <span className="truncate">{event.date}</span>
-            </motion.div>
-            <motion.div
-              className="hidden sm:inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ delay: index * 0.1 + 0.15, duration: motionConfig.duration.normal }}
-            >
+            </div>
+
+            <div className="hidden sm:inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm">
               <Users className="w-3 h-3" />
               <span className="truncate">{event.attendees}</span>
-            </motion.div>
+            </div>
           </div>
         </div>
 
@@ -173,18 +160,14 @@ function EventCard({
             <h4 className="text-lg font-semibold text-white tracking-tight mb-1 group-hover:text-[#50A0E8] transition-colors">
               {event.title}
             </h4>
-            <p className="text-xs text-gray-400">
-              {event.venue ?? event.location}
-            </p>
+            <p className="text-xs text-gray-400">{event.venue ?? event.location}</p>
           </div>
 
-          <p className="text-sm text-gray-400 leading-relaxed line-clamp-3 mb-4">
-            {event.description}
-          </p>
+          <p className="text-sm text-gray-400 leading-relaxed line-clamp-3 mb-4">{event.description}</p>
 
           <div className="mt-auto pt-2 flex items-center justify-between text-sm">
             <span className="text-[11px] uppercase tracking-wide text-gray-500">
-              {event.status === 'past' ? 'Event concluded' : 'Register now'}
+              {event.status === "past" ? "Event concluded" : "Register now"}
             </span>
 
             <motion.span
@@ -192,7 +175,7 @@ function EventCard({
               whileHover={!reduceMotion ? { x: 4 } : undefined}
               transition={{ duration: 0.2 }}
             >
-              <span>{event.status === 'past' ? 'View Highlights' : 'Register'}</span>
+              <span>{event.status === "past" ? "View Highlights" : "Register"}</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </motion.span>
           </div>
@@ -202,33 +185,24 @@ function EventCard({
   );
 }
 
-function EventsGrid({
-  title,
-  events,
-}: {
-  title: string;
-  events: EventItem[];
-}) {
+function EventsGrid({ title, events }: { title: string; events: EventItem[] }) {
   if (events.length === 0) return null;
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: motionConfig.duration.normal }}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: motionConfig.duration.normal, ease: motionConfig.premiumEasing }}
+      style={{ willChange: "transform, opacity" }}
     >
       <AnimatedHeading level="h3" className="text-2xl font-bold text-white tracking-tight">
         {title}
       </AnimatedHeading>
 
-      <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr mt-12">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr mt-12">
         {events.map((event, index) => (
-          <EventCard
-            key={event.title + event.date}
-            event={event}
-            index={index}
-          />
+          <EventCard key={event.title + event.date} event={event} index={index} />
         ))}
       </div>
     </motion.div>
@@ -237,10 +211,7 @@ function EventsGrid({
 
 export default function Events() {
   return (
-    <SectionWrapper
-      id="events"
-      className="relative py-40 bg-gradient-to-b from-[#050810] via-[#0a1628]/80 to-[#050810]"
-    >
+    <SectionWrapper id="events" className="relative py-36 bg-gradient-to-b from-[#050810] via-[#0a1628]/80 to-[#050810]">
       {/* Subtle top accent line for visual intent */}
       <motion.div
         className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#0078D4]/40 to-transparent"
@@ -248,6 +219,7 @@ export default function Events() {
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.8, ease: motionConfig.premiumEasing }}
+        style={{ transformOrigin: "center" }}
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -257,18 +229,19 @@ export default function Events() {
           whileInView={scrollReveal.whileInView}
           viewport={scrollReveal.viewport}
           transition={{ duration: motionConfig.sectionEntry.duration, ease: motionConfig.premiumEasing }}
+          style={{ willChange: "transform, opacity" }}
         >
           <motion.div
             className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/30 mb-8 backdrop-blur-sm"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: motionConfig.duration.normal }}
+            transition={{ duration: motionConfig.duration.normal, ease: motionConfig.premiumEasing }}
+            style={{ willChange: "transform, opacity" }}
           >
-            <span className="text-[#50A0E8] font-semibold text-xs tracking-widest">
-              EVENTS & WORKSHOPS
-            </span>
+            <span className="text-[#50A0E8] font-semibold text-xs tracking-widest">EVENTS & WORKSHOPS</span>
           </motion.div>
+
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
             Learn. Build. Connect.
           </h2>
@@ -280,7 +253,7 @@ export default function Events() {
           </div>
         )}
 
-        <div className={upcomingEvents.length > 0 ? 'mt-20' : ''}>
+        <div className={upcomingEvents.length > 0 ? "mt-20" : ""}>
           <EventsGrid title="Past Events" events={pastEvents} />
         </div>
       </div>
