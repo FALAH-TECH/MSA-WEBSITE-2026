@@ -18,21 +18,19 @@ type MotionSectionProps = {
 /**
  * Wrapper that fades + slides + scales in when scrolled into view.
  * Respects prefers-reduced-motion (fade only, no slide or scale).
- * For Events section: opacity 0→1, y: 40→0, scale: 0.94→1
+ * Premium motion: opacity 0→1, y: 50→0, scale: 0.94→1
+ * Uses premium easing curve for intentional, smooth motion.
  */
 export default function MotionSection({
   children,
   className = '',
   as: Component = 'section',
   id,
-  slideOffset = 20,
-  scaleFrom = 1,
-  enableScale = false,
+  slideOffset = 50,
+  scaleFrom = 0.94,
+  enableScale = true,
 }: MotionSectionProps) {
   const reduceMotion = useReducedMotion();
-  // Use longer duration for section entry (0.6s), normal for others
-  const isEventsSection = id === 'events';
-  const duration = isEventsSection ? 0.6 : motionConfig.duration.normal;
   const MotionEl = Component === 'section' ? motion.section : motion.div;
 
   return (
@@ -42,7 +40,6 @@ export default function MotionSection({
       initial={{
         opacity: 0,
         y: reduceMotion ? 0 : slideOffset,
-        // Scale animation for Events section: 0.94 → 1
         scale: reduceMotion || !enableScale ? 1 : scaleFrom,
       }}
       whileInView={{
@@ -52,8 +49,8 @@ export default function MotionSection({
       }}
       viewport={motionConfig.viewport}
       transition={{
-        duration: reduceMotion ? 0.2 : duration,
-        ease: motionConfig.easing,
+        duration: reduceMotion ? 0.2 : motionConfig.sectionEntry.duration,
+        ease: motionConfig.premiumEasing,
       }}
     >
       {children}

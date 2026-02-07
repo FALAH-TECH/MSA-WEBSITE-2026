@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Calendar, Users, ExternalLink } from 'lucide-react';
-import { MotionItem, SectionWrapper, AnimatedHeading, useReducedMotion } from './Motion';
+import { MotionItem, SectionWrapper, AnimatedHeading, useReducedMotion, motionConfig, scrollReveal } from './Motion';
 
 export type EventItem = {
   title: string;
@@ -113,14 +113,15 @@ function EventCard({
   const href = event.status === 'past' ? (event.reelUrl ?? event.registerUrl) : event.registerUrl;
 
   return (
-    <MotionItem index={index} staggerDelay={0.12} yOffset={35} scaleFrom={0.95}>
+    <MotionItem index={index} staggerDelay={motionConfig.cardStagger} yOffset={35} scaleFrom={0.95}>
       <motion.a
         href={href ?? '#'}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex flex-col rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/15 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-full cursor-pointer"
-        whileHover={reduceMotion ? undefined : { y: -12, scale: 1.06 }}
-        whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+        className="group relative flex flex-col rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/15 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 h-full cursor-pointer"
+        whileHover={!reduceMotion ? { y: -12, scale: 1.06 } : undefined}
+        whileTap={!reduceMotion ? { scale: 0.97 } : undefined}
+        transition={{ duration: motionConfig.hoverDuration }}
       >
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 via-transparent to-transparent opacity-80 pointer-events-none" />
@@ -131,21 +132,39 @@ function EventCard({
             className="w-full aspect-[3/4] object-cover transform transition-transform duration-500 ease-out group-hover:scale-105 filter grayscale-[0.3] group-hover:grayscale-0 opacity-90 group-hover:opacity-100"
           />
 
-          <div className="absolute top-3 left-3">
+          <motion.div
+            className="absolute top-3 left-3"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ delay: index * 0.1, duration: motionConfig.duration.normal }}
+          >
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/60 border border-white/15 text-[11px] font-semibold uppercase tracking-wide text-gray-200 backdrop-blur-sm">
               {event.status === 'past' ? 'Past Event' : 'Upcoming'}
             </span>
-          </div>
+          </motion.div>
 
           <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-gray-300">
-            <div className="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm">
+            <motion.div
+              className="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ delay: index * 0.1 + 0.1, duration: motionConfig.duration.normal }}
+            >
               <Calendar className="w-3 h-3" />
               <span className="truncate">{event.date}</span>
-            </div>
-            <div className="hidden sm:inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm">
+            </motion.div>
+            <motion.div
+              className="hidden sm:inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ delay: index * 0.1 + 0.15, duration: motionConfig.duration.normal }}
+            >
               <Users className="w-3 h-3" />
               <span className="truncate">{event.attendees}</span>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -168,10 +187,14 @@ function EventCard({
               {event.status === 'past' ? 'Event concluded' : 'Register now'}
             </span>
 
-            <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-lg bg-[#1a2335] text-[#8ab4ff] border border-white/5 group-hover:bg-[#0078D4]/10 group-hover:text-[#50A0E8] group-hover:border-[#0078D4]/60 transition-colors text-xs font-medium">
+            <motion.span
+              className="inline-flex items-center space-x-1 px-3 py-1 rounded-lg bg-[#1a2335] text-[#8ab4ff] border border-white/5 group-hover:bg-[#0078D4]/10 group-hover:text-[#50A0E8] group-hover:border-[#0078D4]/60 transition-colors text-xs font-medium"
+              whileHover={!reduceMotion ? { x: 4 } : undefined}
+              transition={{ duration: 0.2 }}
+            >
               <span>{event.status === 'past' ? 'View Highlights' : 'Register'}</span>
               <ExternalLink className="w-3.5 h-3.5" />
-            </span>
+            </motion.span>
           </div>
         </div>
       </motion.a>
@@ -189,7 +212,12 @@ function EventsGrid({
   if (events.length === 0) return null;
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: motionConfig.duration.normal }}
+    >
       <AnimatedHeading level="h3" className="text-2xl font-bold text-white tracking-tight">
         {title}
       </AnimatedHeading>
@@ -203,7 +231,7 @@ function EventsGrid({
           />
         ))}
       </div>
-    </>
+    </motion.div>
   );
 }
 
@@ -214,21 +242,33 @@ export default function Events() {
       className="relative py-40 bg-gradient-to-b from-[#050810] via-[#0a1628]/80 to-[#050810]"
     >
       {/* Subtle top accent line for visual intent */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#0078D4]/40 to-transparent" />
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#0078D4]/40 to-transparent"
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8, ease: motionConfig.premiumEasing }}
+      />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           className="text-center mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          initial={scrollReveal.initial}
+          whileInView={scrollReveal.whileInView}
+          viewport={scrollReveal.viewport}
+          transition={{ duration: motionConfig.sectionEntry.duration, ease: motionConfig.premiumEasing }}
         >
-          <div className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/30 mb-8 backdrop-blur-sm">
+          <motion.div
+            className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/30 mb-8 backdrop-blur-sm"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: motionConfig.duration.normal }}
+          >
             <span className="text-[#50A0E8] font-semibold text-xs tracking-widest">
               EVENTS & WORKSHOPS
             </span>
-          </div>
+          </motion.div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
             Learn. Build. Connect.
           </h2>

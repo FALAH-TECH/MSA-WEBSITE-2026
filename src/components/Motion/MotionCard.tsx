@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useReducedMotion } from './useReducedMotion';
+import { motionConfig } from './motionConfig';
 
 type MotionCardProps = {
   children: React.ReactNode;
@@ -13,7 +14,8 @@ type MotionCardProps = {
 
 /**
  * Card wrapper: hover lift + scale + shadow transition.
- * Values: y: -12, scale: 1.06 for dramatically visible, premium feel
+ * Premium hover: y: -10, scale: 1.05, with clear shadow increase.
+ * Respects reduced motion (fade only).
  */
 export default function MotionCard({
   children,
@@ -25,8 +27,8 @@ export default function MotionCard({
 }: MotionCardProps) {
   const reduceMotion = useReducedMotion();
 
-  // Stronger hover: y -12 and scale 1.06 for clearly noticeable lift and growth
-  const transition = { duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] as const };
+  // Premium hover: y -10 and scale 1.05 for clearly noticeable lift and growth
+  const transition = { duration: motionConfig.hoverDuration, ease: motionConfig.easing };
   const base = { className, transition };
 
   if (Component === 'a' && href) {
@@ -36,7 +38,10 @@ export default function MotionCard({
         target={target}
         rel={rel}
         {...base}
-        {...(reduceMotion ? {} : { whileHover: { y: -12, scale: 1.06 }, whileTap: { scale: 0.97 } })}
+        {...(!reduceMotion && {
+          whileHover: { y: -10, scale: 1.05 },
+          whileTap: { scale: 0.97 },
+        })}
       >
         {children}
       </motion.a>
@@ -46,7 +51,10 @@ export default function MotionCard({
   return (
     <motion.div
       {...base}
-      {...(reduceMotion ? {} : { whileHover: { y: -12, scale: 1.06 }, whileTap: { scale: 0.97 } })}
+      {...(!reduceMotion && {
+        whileHover: { y: -10, scale: 1.05 },
+        whileTap: { scale: 0.97 },
+      })}
     >
       {children}
     </motion.div>

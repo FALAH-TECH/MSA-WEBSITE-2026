@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Instagram, Linkedin, Mail } from "lucide-react";
-import { MotionItem, SectionWrapper, useReducedMotion } from "./Motion";
+import { MotionItem, SectionWrapper, useReducedMotion, motionConfig, scrollReveal } from "./Motion";
 
 type TeamMember = {
   name: string;
@@ -143,15 +143,18 @@ function SocialIconButton({
   const isExternal = !isMail && href.startsWith("http");
 
   return (
-    <a
+    <motion.a
       href={href}
       aria-label={label}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
       className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-[#0078D4] hover:border-[#0078D4] transition-colors"
+      whileHover={{ scale: 1.1, y: -2 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ duration: motionConfig.hoverDuration }}
     >
       {children}
-    </a>
+    </motion.a>
   );
 }
 
@@ -161,18 +164,22 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
   const emailHref = member.socials?.email ? `mailto:${member.socials.email}` : "";
 
   return (
-    <MotionItem index={index} staggerDelay={0.08} yOffset={24}>
+    <MotionItem index={index} staggerDelay={motionConfig.cardStagger} yOffset={24}>
       <div
         className="group relative"
-        onMouseEnter={() => setIsHovered(true)}
+        onMouseEnter={() => !reduceMotion && setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+        <motion.div
+          className="relative aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-all duration-300 shadow-lg hover:shadow-2xl"
+          whileHover={!reduceMotion ? { y: -6 } : undefined}
+          transition={{ duration: motionConfig.hoverDuration }}
+        >
         <img
           src={member.image}
           alt={member.name}
           loading="lazy"
-          className={`w-full h-full object-cover transition-transform duration-500 ${reduceMotion ? '' : 'group-hover:scale-105'}`}
+          className={`w-full h-full object-cover transition-transform duration-500 ${!reduceMotion && 'group-hover:scale-105'}`}
         />
 
         {/* Dark overlay */}
@@ -190,7 +197,7 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: motionConfig.duration.fast }}
           className="absolute top-4 right-4 flex flex-col space-y-2"
         >
           <SocialIconButton
@@ -211,8 +218,8 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
             <Mail className="w-5 h-5 text-white" />
           </SocialIconButton>
         </motion.div>
+        </motion.div>
       </div>
-    </div>
     </MotionItem>
   );
 }
@@ -226,16 +233,22 @@ export default function Team() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           className="text-center mb-14"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          initial={scrollReveal.initial}
+          whileInView={scrollReveal.whileInView}
+          viewport={scrollReveal.viewport}
+          transition={{ duration: motionConfig.sectionEntry.duration, ease: motionConfig.premiumEasing }}
         >
-          <div className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/20 mb-6">
+          <motion.div
+            className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/20 mb-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: motionConfig.duration.normal }}
+          >
             <span className="text-[#50A0E8] font-medium text-sm tracking-wide">
               MEET THE TEAM
             </span>
-          </div>
+          </motion.div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-4">
             Execom 2026

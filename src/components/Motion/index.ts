@@ -6,3 +6,4 @@ export { default as SectionWrapper } from './SectionWrapper';
 export { default as AnimatedText } from './AnimatedText';
 export { useReducedMotion } from './useReducedMotion';
 export { motionConfig } from './motionConfig';
+export * from './motionVariants';

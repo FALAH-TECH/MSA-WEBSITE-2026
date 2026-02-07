@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import { MotionItem, SectionWrapper, useReducedMotion } from './Motion';
+import { MotionItem, SectionWrapper, useReducedMotion, motionConfig, scrollReveal } from './Motion';
 
 const benefits = [
   'Access to exclusive Microsoft resources and tools',
@@ -36,12 +36,18 @@ export default function Join() {
       <div className="relative max-w-5xl mx-auto px-6 lg:px-8">
         <motion.div
           className="text-center mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          initial={scrollReveal.initial}
+          whileInView={scrollReveal.whileInView}
+          viewport={scrollReveal.viewport}
+          transition={{ duration: motionConfig.sectionEntry.duration, ease: motionConfig.premiumEasing }}
         >
-          <div className="w-24 h-1 bg-gradient-to-r from-[#0078D4] to-[#50A0E8] mx-auto mb-8 origin-center" />
+          <motion.div
+            className="w-24 h-1 bg-gradient-to-r from-[#0078D4] to-[#50A0E8] mx-auto mb-8 origin-center"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.8, ease: motionConfig.premiumEasing, delay: 0.1 }}
+          />
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-6">
             Stay connected with
@@ -57,17 +63,31 @@ export default function Join() {
         </motion.div>
 
         <motion.div
-          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12 mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
+          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12 mb-12 shadow-lg"
+          initial={scrollReveal.initial}
+          whileInView={scrollReveal.whileInView}
+          viewport={scrollReveal.viewport}
+          transition={{
+            duration: motionConfig.sectionEntry.duration,
+            ease: motionConfig.premiumEasing,
+            delay: 0.1,
+          }}
         >
           <div className="grid md:grid-cols-2 gap-4 mb-8">
             {benefits.map((benefit, index) => (
-              <MotionItem key={benefit} index={index} staggerDelay={0.08} yOffset={12}>
+              <MotionItem
+                key={benefit}
+                index={index}
+                staggerDelay={motionConfig.cardStagger}
+                yOffset={12}
+              >
                 <div className="flex items-start space-x-3">
-                  <CheckCircle2 className="w-6 h-6 text-[#50A0E8] flex-shrink-0 mt-0.5" />
+                  <motion.div
+                    whileHover={!reduceMotion ? { scale: 1.2 } : undefined}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <CheckCircle2 className="w-6 h-6 text-[#50A0E8] flex-shrink-0 mt-0.5" />
+                  </motion.div>
                   <span className="text-gray-300">{benefit}</span>
                 </div>
               </MotionItem>
@@ -79,49 +99,35 @@ export default function Join() {
               href="https://chat.whatsapp.com/JN4rgEDWxXN7fC0B4WIUAQ?mode=gi_t"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative px-8 py-4 bg-[#0078D4] text-white font-semibold rounded-lg overflow-hidden inline-flex items-center justify-center"
-              whileHover={reduceMotion ? undefined : { scale: 1.05 }}
-              whileTap={reduceMotion ? undefined : { scale: 0.95 }}
+              className="px-8 py-4 bg-gradient-to-r from-[#0078D4] to-[#50A0E8] text-white font-semibold rounded-lg hover:shadow-2xl transition-shadow cursor-pointer inline-flex items-center justify-center gap-2"
+              whileHover={!reduceMotion ? { scale: motionConfig.button.hoverScale } : undefined}
+              whileTap={!reduceMotion ? { scale: motionConfig.button.tapScale } : undefined}
+              transition={{ duration: motionConfig.button.duration }}
             >
-              <span className="relative z-10 flex items-center justify-center space-x-2">
-                <span>Join our Community</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-              {!reduceMotion && (
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-[#0078D4] to-[#50A0E8]"
-                  initial={{ x: '100%' }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
+              Join WhatsApp Group
+              <motion.div
+                initial={{ x: 0 }}
+                whileHover={!reduceMotion ? { x: 4 } : undefined}
+                transition={{ duration: 0.2 }}
+              >
+                <ArrowRight size={20} />
+              </motion.div>
             </motion.a>
 
             <motion.a
-              href="#events"
-              className="px-8 py-4 bg-white/5 text-white font-semibold rounded-lg border border-white/10 hover:bg-white/10 transition-colors inline-flex items-center justify-center"
-              whileHover={reduceMotion ? undefined : { scale: 1.05 }}
-              whileTap={reduceMotion ? undefined : { scale: 0.95 }}
+              href="https://www.instagram.com/msa_lbscek/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 border-2 border-white/20 text-white font-semibold rounded-lg hover:bg-white/5 hover:border-white/40 transition-all cursor-pointer inline-flex items-center justify-center"
+              whileHover={!reduceMotion ? { scale: motionConfig.button.hoverScale } : undefined}
+              whileTap={!reduceMotion ? { scale: motionConfig.button.tapScale } : undefined}
+              transition={{ duration: motionConfig.button.duration }}
             >
-              View Events
+              Follow on Instagram
             </motion.a>
           </div>
         </motion.div>
-
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <p className="text-gray-500 text-sm">
-            Stay updated with the latest events, workshops, and community news.
-          </p>
-        </motion.div>
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#0078D4] to-transparent origin-center" />
     </SectionWrapper>
   );
 }
