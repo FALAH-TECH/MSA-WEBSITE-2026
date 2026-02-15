@@ -141,7 +141,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="md:hidden bg-[#050810]/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
+            className="md:hidden bg-[#050810]/95 backdrop-blur-xl border-b border-white/10 "
             style={{ willChange: "height, opacity" }}
           >
             <div className="px-6 py-4 space-y-2">

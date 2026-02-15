@@ -6,7 +6,7 @@ export default function Hero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050810]">
+    <section className="relative min-h-screen flex items-center justify-center bg-[#050810]">
       {/* Background (lightweight + smooth) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Grid */}

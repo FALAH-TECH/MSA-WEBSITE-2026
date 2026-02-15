@@ -109,9 +109,9 @@ function EventCard({ event, index }: { event: EventItem; index: number }) {
         href={href ?? "#"}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex flex-col rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/15 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full cursor-pointer"
+        className="group relative flex flex-col rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/15  shadow-lg hover:shadow-xl transition-shadow duration-300 h-full cursor-pointer"
       >
-        <div className="relative overflow-hidden">
+        <div className="relative ">
           <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 via-transparent to-transparent opacity-80 pointer-events-none" />
 
           <img

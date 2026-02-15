@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -9,7 +8,7 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#0b1220] text-white overflow-x-hidden">
+    <div className=" bg-[#0b1220] text-white overflow-hidden ">
       <Navbar />
       <Hero />
       <About />

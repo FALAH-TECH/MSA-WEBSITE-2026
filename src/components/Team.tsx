@@ -127,7 +127,7 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
     <MotionItem index={index} staggerDelay={motionConfig.cardStagger} yOffset={22}>
       <div className="group relative">
         <motion.div
-          className="relative aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-colors duration-300 shadow-lg hover:shadow-xl"
+          className="relative aspect-[3/4] rounded-xl  bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-colors duration-300 shadow-lg hover:shadow-xl"
           style={{ willChange: "transform" }}
           whileHover={!reduceMotion ? { y: -8, scale: 1.02 } : undefined}
           whileTap={!reduceMotion ? { scale: 0.99 } : undefined}

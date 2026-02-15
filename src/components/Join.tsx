@@ -23,7 +23,7 @@ export default function Join() {
   return (
     <SectionWrapper
       id="join"
-      className="relative py-32 bg-gradient-to-b from-[#0a0f1e] to-[#050810] overflow-hidden"
+      className="relative py-32 bg-gradient-to-b from-[#0a0f1e] to-[#050810]"
     >
       {/* Static glow (no infinite animation => removes lag) */}
       {!reduceMotion && (
