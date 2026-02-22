@@ -1,225 +1,340 @@
-import { Calendar, Users, ExternalLink } from "lucide-react";
+import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { Calendar, MapPin, Users, ExternalLink } from 'lucide-react';
+import { SectionReveal, AnimatedText, AnimatedButton } from './animations';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { ANIMATION_CONFIG } from '@/utils/animations';
 
-export type EventItem = {
-  title: string;
-  date: string;
-  dateSortKey: string; // ISO-ish for sorting e.g. "2026-02-05"
-  venue?: string;
-  location?: string;
-  attendees: string;
-  description: string;
-  imageUrl: string;
-  reelUrl?: string;
-  registerUrl?: string;
-  status: "upcoming" | "past";
-  tags?: string[];
-  time?: string;
+const featuredEvent = {
+  title: 'Getting Started with Cybersecurity & Ethical Hacking',
+  date: 'FEBRUARY 5, 2026',
+  time: 'TIME WILL BE ANOUNCED',
+  location: 'ONLINE : VIA GMEET',
+  attendees: '80+',
+  description:
+    'An introductory webinar designed for first-year students to explore the fundamentals of cybersecurity and ethical hacking, understand real-world security threats, and learn how digital systems are protected in today's connected world.',
+  tags: ['Cybersecurity', 'Ethical Hacking', 'Digital Safety'],
+  status: 'Upcoming',
 };
 
-// All events in one list; we split by status and sort
-const allEvents: EventItem[] = [
+const pastEvents = [
   {
-    title: "Getting Started with Cybersecurity & Ethical Hacking",
-    date: "Feb 5, 2026",
-    dateSortKey: "2026-02-05",
-    venue: "ONLINE : VIA GMEET",
-    attendees: "80+ participants",
-    description:
-      "An introductory webinar for beginners covering cybersecurity fundamentals, ethical hacking basics, real-world threats, and how modern digital systems are protected.",
-    imageUrl: "/EVENTS/cybersecurity.jpg",
-    registerUrl: "https://v0-cybersecurity-webinar.vercel.app/",
-    status: "past",
-    tags: ["Cybersecurity", "Ethical Hacking", "Digital Safety"],
+    title: 'MSA CARNIVAL',
+    date: 'Aug 10, 2025',
+    attendees: '95',
+    reelUrl: 'https://www.instagram.com/reel/DNbIJUyyg1o/',
+    posterUrl: 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=300',
   },
   {
-    title: "MSA CARNIVAL",
-    date: "Aug 10, 2025",
-    dateSortKey: "2025-08-10",
-    venue: "OpenMind Makerspace",
-    attendees: "95+ participants",
-    description:
-      "MSA Carnival '25 was an interactive tech carnival featuring hands-on workshops, talks, and challenges focused on practical development skills, Microsoft tools, and collaborative learning.",
-    reelUrl: "https://www.instagram.com/reel/DNbIJUyyg1o/",
-    imageUrl: "/EVENTS/CARNIVAL.jpg",
-    status: "past",
+    title: 'POP & PITCH',
+    date: 'Sep 19, 2025',
+    attendees: '60',
+    reelUrl: 'https://www.instagram.com/reel/DO_QorQksFg/',
+    posterUrl: 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=300',
   },
   {
-    title: "POP & PITCH",
-    date: "Sep 19, 2025",
-    dateSortKey: "2025-09-19",
-    venue: "Innovation Lab, LBSCEK",
-    attendees: "60+ participants",
-    description:
-      "POP & PITCH was a high-energy creativity challenge where students used Microsoft 365 tools to turn ideas into impactful campaigns through hands-on design, teamwork, and confident pitching.",
-    reelUrl: "https://www.instagram.com/reel/DO_QorQksFg/",
-    imageUrl: "/EVENTS/DESIGN.jpg",
-    status: "past",
+    title: 'TECH ENHANCED VISION',
+    date: 'Dec 22, 2025',
+    attendees: '20',
+    reelUrl: 'https://www.instagram.com/reel/DSp7_AAEnv3/',
+    posterUrl: 'https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=300',
   },
   {
-    title: "TECH ENHANCED VISION",
-    date: "Dec 22, 2025",
-    dateSortKey: "2025-12-22",
-    venue: "Seminar Hall, LBSCEK",
-    attendees: "20+ participants",
-    description:
-      "Tech-Enhanced Vision focused on accessibility and inclusion, showcasing how thoughtful technology can empower the visually impaired and create more inclusive digital experiences.",
-    reelUrl: "https://www.instagram.com/reel/DSp7_AAEnv3/",
-    imageUrl: "/EVENTS/TECHENCD.jpg",
-    status: "past",
-  },
-  {
-    title: "TECHLAUGHS - THECOMSHOW",
-    date: "Dec 22, 2025",
-    dateSortKey: "2025-12-22",
-    venue: "Auditorium, LBSCEK",
-    attendees: "100+ participants",
-    description:
-      "TechLaughs at IEDC Summit 2025 delivered high-energy humor and nonstop laughter, serving as a perfect stress-buster that refreshed minds and uplifted campus spirits.",
-    reelUrl: "https://www.instagram.com/reel/DStwbcHEnL3/",
-    imageUrl: "/EVENTS/TECHLAUGH.jpg",
-    status: "past",
-  },
-  {
-    title: "Power Up Your Code",
-    date: "Aug 10, 2025",
-    dateSortKey: "2025-08-10",
-    venue: "OpenMind Makerspace",
-    attendees: "30+ participants",
-    description:
-      "Power Up Your Code was a hands-on workshop introducing essential Microsoft tools, helping students boost coding productivity, practical skills, and real-world development efficiency.",
-    reelUrl: "https://www.instagram.com/p/DNJGoqcSgbr/",
-    imageUrl: "/EVENTS/POWERUP.jpg",
-    status: "past",
+    title: 'TECHLAUGHS - THECOMSHOW',
+    date: 'Dec 22, 2025',
+    attendees: '100+',
+    reelUrl: 'https://www.instagram.com/reel/DStwbcHEnL3/',
+    posterUrl: 'https://images.pexels.com/photos/3945632/pexels-photo-3945632.jpeg?auto=compress&cs=tinysrgb&w=300',
   },
 ];
 
-const upcomingEvents = [...allEvents.filter((e) => e.status === "upcoming")].sort((a, b) =>
-  a.dateSortKey.localeCompare(b.dateSortKey)
-);
-const pastEvents = [...allEvents.filter((e) => e.status === "past")].sort((a, b) =>
-  b.dateSortKey.localeCompare(a.dateSortKey)
-);
-
-function EventCard({ event, index }: { event: EventItem; index: number }) {
-  const href = event.status === "past" ? event.reelUrl ?? event.registerUrl : event.registerUrl;
-
-  return (
-    <div>
-      <a
-        href={href ?? "#"}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative flex flex-col rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/15  shadow-lg hover:shadow-xl transition-shadow duration-300 h-full cursor-pointer"
-      >
-        <div className="relative ">
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 via-transparent to-transparent opacity-80 pointer-events-none" />
-
-          <img
-            src={event.imageUrl}
-            alt={event.title}
-            loading="lazy"
-            className="w-full aspect-[3/4] object-cover transform transition-transform duration-500 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
-          />
-
-          {/* Keep these STATIC (no whileInView) — MotionItem already animates the card in */}
-          <div className="absolute top-3 left-3">
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/60 border border-white/15 text-[11px] font-semibold uppercase tracking-wide text-gray-200 backdrop-blur-sm">
-              {event.status === "past" ? "Past Event" : "Upcoming"}
-            </span>
-          </div>
-
-          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-gray-300">
-            <div className="inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm">
-              <Calendar className="w-3 h-3" />
-              <span className="truncate">{event.date}</span>
-            </div>
-
-            <div className="hidden sm:inline-flex items-center space-x-1 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm">
-              <Users className="w-3 h-3" />
-              <span className="truncate">{event.attendees}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col flex-1 p-5 md:p-6">
-          <div className="mb-3">
-            <h4 className="text-lg font-semibold text-white tracking-tight mb-1 group-hover:text-[#50A0E8] transition-colors">
-              {event.title}
-            </h4>
-            <p className="text-xs text-gray-400">{event.venue ?? event.location}</p>
-          </div>
-
-          <p className="text-sm text-gray-400 leading-relaxed line-clamp-3 mb-4">{event.description}</p>
-
-          <div className="mt-auto pt-2 flex items-center justify-between text-sm">
-            <span className="text-[11px] uppercase tracking-wide text-gray-500">
-              {event.status === "past" ? "Event concluded" : "Register now"}
-            </span>
-
-            <span
-              className="inline-flex items-center space-x-1 px-3 py-1 rounded-lg bg-[#1a2335] text-[#8ab4ff] border border-white/5 group-hover:bg-[#0078D4]/10 group-hover:text-[#50A0E8] group-hover:border-[#0078D4]/60 transition-colors text-xs font-medium"
-            >
-              <span>{event.status === "past" ? "View Highlights" : "Register"}</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </span>
-          </div>
-        </div>
-      </a>
-    </div>
-  );
-}
-
-function EventsGrid({ title, events }: { title: string; events: EventItem[] }) {
-  if (events.length === 0) return null;
-
-  return (
-    <div
-    >
-      <h3 className="text-2xl font-bold text-white tracking-tight">
-        {title}
-      </h3>
-
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr mt-12">
-        {events.map((event, index) => (
-          <EventCard key={event.title + event.date} event={event} index={index} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function Events() {
+  const { ref: containerRef, isInView } = useScrollAnimation();
+
   return (
-    <section id="events" className="relative py-36 bg-gradient-to-b from-[#050810] via-[#0a1628]/80 to-[#050810]">
-      {/* Subtle top accent line for visual intent */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#0078D4]/40 to-transparent"
-      />
-
+    <section
+      id="events"
+      className="relative py-32 bg-gradient-to-b from-[#050810] to-[#0a0f1e]"
+      ref={containerRef}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div
-          className="text-center mb-20"
-        >
-          <div
-            className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/30 mb-8 backdrop-blur-sm"
+        <SectionReveal className="text-center mb-16" variant="fadeInUp">
+          <div className="inline-block px-4 py-2 rounded-full bg-[#0078D4]/10 border border-[#0078D4]/20 mb-6">
+            <motion.span
+              className="text-[#50A0E8] font-medium text-sm tracking-wide"
+              initial={{ opacity: 0, y: 10 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{
+                duration: ANIMATION_CONFIG.durations.base / 1000,
+                ease: ANIMATION_CONFIG.easing.smooth,
+                delay: 0.1,
+              }}
+            >
+              EVENTS & WORKSHOPS
+            </motion.span>
+          </div>
+          <AnimatedText
+            as="h2"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight"
+            delay={0.15}
           >
-            <span className="text-[#50A0E8] font-semibold text-xs tracking-widest">EVENTS & WORKSHOPS</span>
-          </div>
-
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
             Learn. Build. Connect.
-          </h2>
-        </div>
+          </AnimatedText>
+        </SectionReveal>
 
-        {upcomingEvents.length > 0 && (
-          <div className="mb-24">
-            <EventsGrid title="Upcoming Events" events={upcomingEvents} />
+        <SectionReveal
+          className="text-center mb-12 max-w-3xl mx-auto"
+          variant="fadeInUp"
+          delay={0.2}
+        >
+          <motion.p
+            className="text-lg text-gray-400 leading-relaxed"
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{
+              duration: ANIMATION_CONFIG.durations.base / 1000,
+              ease: ANIMATION_CONFIG.easing.smooth,
+              delay: 0.25,
+            }}
+          >
+            Explore MSA LBSCEK events — workshops, talks, and community sessions. Check upcoming events and browse past highlights.
+          </motion.p>
+        </SectionReveal>
+
+        <SectionReveal className="mb-20" variant="fadeInUp" delay={0.3}>
+          <div className="relative rounded-2xl bg-gradient-to-br from-[#0078D4]/10 to-[#50A0E8]/5 border border-[#0078D4]/30 overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#0078D4] rounded-full filter blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
+
+            <div className="relative p-8 md:p-12">
+              <div className="flex flex-col lg:flex-row gap-8">
+                <div className="flex-1">
+                  <motion.div
+                    className="inline-block px-3 py-1 rounded-full bg-[#0078D4] text-white text-xs font-semibold mb-4"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{
+                      duration: ANIMATION_CONFIG.durations.short / 1000,
+                      ease: ANIMATION_CONFIG.easing.smooth,
+                      delay: 0.35,
+                    }}
+                  >
+                    {featuredEvent.status}
+                  </motion.div>
+
+                  <AnimatedText
+                    as="h3"
+                    className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight"
+                    delay={0.4}
+                  >
+                    {featuredEvent.title}
+                  </AnimatedText>
+
+                  <motion.p
+                    className="text-gray-400 text-lg leading-relaxed mb-6"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{
+                      duration: ANIMATION_CONFIG.durations.base / 1000,
+                      ease: ANIMATION_CONFIG.easing.smooth,
+                      delay: 0.45,
+                    }}
+                  >
+                    {featuredEvent.description}
+                  </motion.p>
+
+                  <motion.div
+                    className="flex flex-wrap gap-2 mb-8"
+                    initial={{ opacity: 0 }}
+                    animate={isInView ? { opacity: 1 } : {}}
+                    transition={{
+                      duration: ANIMATION_CONFIG.durations.base / 1000,
+                      ease: ANIMATION_CONFIG.easing.smooth,
+                      delay: 0.5,
+                      staggerChildren: ANIMATION_CONFIG.stagger.short,
+                    }}
+                  >
+                    {featuredEvent.tags.map((tag, index) => (
+                      <motion.span
+                        key={tag}
+                        className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300 text-sm"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{
+                          duration: ANIMATION_CONFIG.durations.base / 1000,
+                          ease: ANIMATION_CONFIG.easing.smooth,
+                          delay: 0.5 + index * ANIMATION_CONFIG.stagger.short,
+                        }}
+                      >
+                        {tag}
+                      </motion.span>
+                    ))}
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{
+                      duration: ANIMATION_CONFIG.durations.base / 1000,
+                      ease: ANIMATION_CONFIG.easing.smooth,
+                      delay: 0.55,
+                    }}
+                  >
+                    <AnimatedButton
+                      onClick={() =>
+                        window.open(
+                          'https://v0-cybersecurity-webinar.vercel.app/',
+                          '_blank'
+                        )
+                      }
+                      variant="primary"
+                    >
+                      <span>Register Now</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </AnimatedButton>
+                  </motion.div>
+                </div>
+
+                <div className="lg:w-80 space-y-4">
+                  {[
+                    {
+                      icon: Calendar,
+                      label: 'Date',
+                      value: featuredEvent.date,
+                      subvalue: featuredEvent.time,
+                    },
+                    {
+                      icon: MapPin,
+                      label: 'Location',
+                      value: featuredEvent.location,
+                    },
+                    {
+                      icon: Users,
+                      label: 'Expected',
+                      value: `${featuredEvent.attendees} attendees`,
+                    },
+                  ].map((item, index) => (
+                    <motion.div
+                      key={item.label}
+                      className="flex items-start space-x-3 p-4 rounded-xl bg-white/5 border border-white/10"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : {}}
+                      transition={{
+                        duration: ANIMATION_CONFIG.durations.base / 1000,
+                        ease: ANIMATION_CONFIG.easing.smooth,
+                        delay: 0.35 + index * 0.08,
+                      }}
+                    >
+                      <item.icon className="w-5 h-5 text-[#50A0E8] mt-0.5" />
+                      <div>
+                        <div className="text-white font-semibold">{item.label}</div>
+                        <div className="text-gray-400 text-sm">{item.value}</div>
+                        {item.subvalue && (
+                          <div className="text-gray-500 text-xs mt-1">
+                            {item.subvalue}
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-        )}
+        </SectionReveal>
 
-        <div className={upcomingEvents.length > 0 ? "mt-20" : ""}>
-          <EventsGrid title="Past Events" events={pastEvents} />
-        </div>
+        <SectionReveal variant="fadeInUp" delay={0.4}>
+          <h3 className="text-2xl font-bold text-white mb-8 tracking-tight">
+            Past Events
+          </h3>
+
+          <div className="space-y-4">
+            {pastEvents.map((event, index) => (
+              <motion.a
+                key={event.title}
+                href={event.reelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{
+                  duration: ANIMATION_CONFIG.durations.base / 1000,
+                  ease: ANIMATION_CONFIG.easing.smooth,
+                  delay: 0.45 + index * ANIMATION_CONFIG.stagger.base,
+                }}
+                className="group relative block"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+              >
+                <div className="flex flex-col sm:flex-row gap-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0078D4]/50 transition-all duration-300">
+                  <div className="flex-shrink-0 w-full sm:w-32 h-48 sm:h-auto rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-md aspect-[3/4]">
+                    <motion.img
+                      src={event.posterUrl}
+                      alt={event.title}
+                      className="w-full h-full object-cover"
+                      initial={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      transition={{
+                        duration: ANIMATION_CONFIG.durations.short / 1000,
+                        ease: ANIMATION_CONFIG.easing.smooth,
+                      }}
+                    />
+                  </div>
+
+                  <div className="flex items-center space-x-4 flex-1 min-w-0">
+                    <div className="hidden sm:block w-2 h-2 rounded-full bg-[#0078D4] flex-shrink-0" />
+
+                    <div className="flex-1 min-w-0">
+                      <motion.h4
+                        className="text-lg font-semibold text-white group-hover:text-[#50A0E8] transition-colors truncate"
+                        initial={{ opacity: 0 }}
+                        animate={isInView ? { opacity: 1 } : {}}
+                        transition={{
+                          duration: ANIMATION_CONFIG.durations.base / 1000,
+                          ease: ANIMATION_CONFIG.easing.smooth,
+                          delay:
+                            0.45 + index * ANIMATION_CONFIG.stagger.base,
+                        }}
+                      >
+                        {event.title}
+                      </motion.h4>
+                      <motion.p
+                        className="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{
+                          duration: ANIMATION_CONFIG.durations.short / 1000,
+                        }}
+                      >
+                        View Instagram Reel →
+                      </motion.p>
+                    </div>
+
+                    <div className="flex items-center space-x-4 sm:space-x-6 text-gray-400 text-sm flex-shrink-0">
+                      <div className="flex items-center space-x-2">
+                        <Calendar className="w-4 h-4" />
+                        <span className="hidden sm:inline">{event.date}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Users className="w-4 h-4" />
+                        <span>{event.attendees}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <motion.div
+                  className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#0078D4] to-[#50A0E8] opacity-0 group-hover:opacity-100 transition-opacity rounded-l-xl"
+                  initial={{ scaleY: 0 }}
+                  whileHover={{ scaleY: 1 }}
+                  transition={{
+                    duration: ANIMATION_CONFIG.durations.short / 1000,
+                  }}
+                  style={{ originY: 'top' }}
+                />
+              </motion.a>
+            ))}
+          </div>
+        </SectionReveal>
       </div>
     </section>
   );
