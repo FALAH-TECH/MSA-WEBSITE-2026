@@ -65,11 +65,31 @@ export default function Footer() {
             </motion.div>
           </div>
         </div>
+        {/* Admin Access */}
+        <div className="flex justify-center mb-8">
+          <a href="/admin"
+  className="text-xs px-4 py-2 rounded-lg border transition-colors"
+  style={{ 
+    color: '#0078D4', 
+    borderColor: '#0078D4',
+    backgroundColor: 'rgba(0, 120, 212, 0.05)'
+  }}
+  onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(0, 120, 212, 0.15)')}
+  onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'rgba(0, 120, 212, 0.05)')}
+>
+  Admin Portal
+</a>
+        </div>
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            © 2025 Microsoft Student Ambassadors LBSCEK. All rights reserved.
+            <a href="/admin"
+            className="hover:text-gray-400 transition-colors"
+            >
+              .©
+            </a>
+            {" "}2025 Microsoft Student Ambassadors LBSCEK. All rights reserved.
           </p>
 
           {/* Social links */}
