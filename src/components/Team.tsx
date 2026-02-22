@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Instagram, Linkedin, Mail } from "lucide-react";
 import {
-  MotionItem,
   SectionWrapper,
   useReducedMotion,
   motionConfig,
@@ -11,7 +10,7 @@ import {
 type TeamMember = {
   name: string;
   role: string;
-  image: string; // local path like "/team/name.jpg"
+  image: string;
   socials?: {
     instagram?: string;
     linkedin?: string;
@@ -109,10 +108,9 @@ function SocialIconButton({
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
       className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-[#0078D4] hover:border-[#0078D4] transition-colors"
-      style={{ willChange: "transform" }}
       whileHover={{ y: -2, scale: 1.08 }}
       whileTap={{ scale: 0.96 }}
-      transition={{ type: "spring", stiffness: 350, damping: 22 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
       {children}
     </motion.a>
@@ -124,53 +122,64 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
   const emailHref = member.socials?.email ? `mailto:${member.socials.email}` : "";
 
   return (
-    <MotionItem index={index} staggerDelay={motionConfig.cardStagger} yOffset={22}>
-      <div className="group relative">
-        <motion.div
-          className="relative aspect-[3/4] rounded-xl  bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-colors duration-300 shadow-lg hover:shadow-xl"
-          style={{ willChange: "transform" }}
-          whileHover={!reduceMotion ? { y: -8, scale: 1.02 } : undefined}
-          whileTap={!reduceMotion ? { scale: 0.99 } : undefined}
-          transition={!reduceMotion ? { type: "spring", stiffness: 260, damping: 22 } : undefined}
-        >
-          <img
-            src={member.image}
-            alt={member.name}
-            loading="lazy"
-            className={`w-full h-full object-cover transition-transform duration-500 ${
-              !reduceMotion ? "group-hover:scale-105" : ""
-            }`}
-          />
+    <motion.div
+      className="group relative"
+      // Fade + small rise, no stagger delay beyond index * 0.04
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{
+        duration: 0.35,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        delay: Math.min(index * 0.04, 0.25), // cap delay at 0.25s so last cards don't wait forever
+      }}
+    >
+      <motion.div
+        className="relative aspect-[3/4] rounded-xl bg-gradient-to-br from-[#0078D4]/20 to-[#50A0E8]/10 border border-white/10 group-hover:border-[#0078D4]/50 transition-colors duration-300 shadow-lg hover:shadow-xl overflow-hidden"
+        whileHover={!reduceMotion ? { y: -6, scale: 1.02 } : undefined}
+        whileTap={!reduceMotion ? { scale: 0.99 } : undefined}
+        transition={{ type: "spring", stiffness: 380, damping: 26 }}
+        style={{ willChange: "transform" }}
+      >
+        <img
+          src={member.image}
+          alt={member.name}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
 
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050810] via-[#050810]/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050810] via-[#050810]/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
 
-          {/* Name + Role */}
-          <div className="absolute bottom-0 left-0 right-0 p-6">
-            <h3 className="text-xl font-bold text-white mb-1 tracking-tight">{member.name}</h3>
-            <p className="text-[#50A0E8] text-sm font-medium">{member.role}</p>
-          </div>
+        {/* Name + Role */}
+        <div className="absolute bottom-0 left-0 right-0 p-6">
+          <h3 className="text-xl font-bold text-white mb-1 tracking-tight">
+            {member.name}
+          </h3>
+          <p className="text-[#50A0E8] text-sm font-medium">{member.role}</p>
+        </div>
 
-          {/* Socials (no state; shows on hover) */}
-          <motion.div
-            className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
-            style={{ willChange: "transform, opacity" }}
+        {/* Socials */}
+        <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+          <SocialIconButton
+            href={member.socials?.instagram || ""}
+            label={`${member.name} Instagram`}
           >
-            <SocialIconButton href={member.socials?.instagram || ""} label={`${member.name} Instagram`}>
-              <Instagram className="w-5 h-5 text-white" />
-            </SocialIconButton>
-
-            <SocialIconButton href={member.socials?.linkedin || ""} label={`${member.name} LinkedIn`}>
-              <Linkedin className="w-5 h-5 text-white" />
-            </SocialIconButton>
-
-            <SocialIconButton href={emailHref} label={`${member.name} Email`}>
-              <Mail className="w-5 h-5 text-white" />
-            </SocialIconButton>
-          </motion.div>
-        </motion.div>
-      </div>
-    </MotionItem>
+            <Instagram className="w-5 h-5 text-white" />
+          </SocialIconButton>
+          <SocialIconButton
+            href={member.socials?.linkedin || ""}
+            label={`${member.name} LinkedIn`}
+          >
+            <Linkedin className="w-5 h-5 text-white" />
+          </SocialIconButton>
+          <SocialIconButton href={emailHref} label={`${member.name} Email`}>
+            <Mail className="w-5 h-5 text-white" />
+          </SocialIconButton>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -183,7 +192,10 @@ export default function Team() {
           initial={scrollReveal.initial}
           whileInView={scrollReveal.whileInView}
           viewport={scrollReveal.viewport}
-          transition={{ duration: motionConfig.sectionEntry.duration, ease: motionConfig.premiumEasing }}
+          transition={{
+            duration: motionConfig.sectionEntry.duration,
+            ease: motionConfig.premiumEasing,
+          }}
           style={{ willChange: "transform, opacity" }}
         >
           <motion.div
@@ -191,10 +203,15 @@ export default function Team() {
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: motionConfig.duration.normal, ease: motionConfig.premiumEasing }}
+            transition={{
+              duration: 0.35,
+              ease: motionConfig.premiumEasing,
+            }}
             style={{ willChange: "transform, opacity" }}
           >
-            <span className="text-[#50A0E8] font-medium text-sm tracking-wide">MEET THE TEAM</span>
+            <span className="text-[#50A0E8] font-medium text-sm tracking-wide">
+              MEET THE TEAM
+            </span>
           </motion.div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-4">
@@ -202,7 +219,8 @@ export default function Team() {
           </h2>
 
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-            The passionate team behind MSA LBSCEK, dedicated to building a thriving tech community.
+            The passionate team behind MSA LBSCEK, dedicated to building a
+            thriving tech community.
           </p>
         </motion.div>
 

@@ -102,8 +102,8 @@ export default function Stats() {
           className="mt-8 p-5 rounded-2xl bg-[#0078D4]/10 border border-[#0078D4]/20 text-center max-w-2xl mx-auto"
         >
           <p className="text-[#50A0E8] text-sm font-medium">
-            🌟 Proud hosts of a workshop for visually impaired students —
-            <span className="text-white"> taught by blind software developers.</span>
+           Proud hosts of a workshop on assistive technology — conducted for students with visual impairments, featuring industry professionals.
+           
           </p>
         </motion.div>
 

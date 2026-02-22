@@ -1,3 +1,4 @@
+import AnnouncementsPreview from "./components/AnnouncementsPreview";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import type { Session } from '@supabase/supabase-js'
@@ -22,6 +23,7 @@ function PublicSite() {
       <Hero />
       <About />
       <Stats />
+      <AnnouncementsPreview /> 
       <Events />
       <Team />
       <Join />
