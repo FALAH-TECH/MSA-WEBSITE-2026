@@ -12,7 +12,7 @@ const featuredEvent = {
   location: 'ONLINE : VIA GMEET',
   attendees: '80+',
   description:
-    'An introductory webinar designed for first-year students to explore the fundamentals of cybersecurity and ethical hacking, understand real-world security threats, and learn how digital systems are protected in today's connected world.',
+   `An introductory webinar designed for first-year students to explore the fundamentals of cybersecurity and ethical hacking, understand real-world security threats, and learn how digital systems are protected in today's connected world.`,
   tags: ['Cybersecurity', 'Ethical Hacking', 'Digital Safety'],
   status: 'Upcoming',
 };
