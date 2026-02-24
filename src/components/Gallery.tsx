@@ -75,7 +75,7 @@ export default function Gallery() {
                                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                                     animate={{ opacity: 1, scale: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.5), ease: "easeOut" }}
-                                    className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer"
+                                    className="group relative rounded-2xl overflow-hidden cursor-pointer flex flex-col h-full"
                                 >
                                     {/* Soft cyan glow border effect (via pseudo-element padding) */}
                                     <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#50A0E8]/30 transition-colors duration-500 z-20 pointer-events-none box-border" />
@@ -85,7 +85,7 @@ export default function Gallery() {
                                         src={image.imageUrl}
                                         alt={image.title || "Gallery image"}
                                         loading="lazy"
-                                        className="w-full h-full object-cover transform transition-transform duration-700 ease-out group-hover:scale-110 bg-white/5"
+                                        className="w-full flex-1 object-cover transform transition-transform duration-700 ease-out group-hover:scale-110 bg-white/5"
                                     />
 
                                     {/* Dark gradient overlay on hover */}

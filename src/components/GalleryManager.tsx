@@ -143,11 +143,10 @@ export default function GalleryManager() {
           <button
             type="button"
             onClick={() => setMode('url')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-all ${
-              mode === 'url'
-                ? 'bg-[#0078D4] border-[#0078D4] text-white'
-                : 'bg-white/5 border-white/10 text-gray-400 hover:text-white'
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-all ${mode === 'url'
+              ? 'bg-[#0078D4] border-[#0078D4] text-white'
+              : 'bg-white/5 border-white/10 text-gray-400 hover:text-white'
+              }`}
           >
             <Link className="w-4 h-4" />
             Paste URL
@@ -155,11 +154,10 @@ export default function GalleryManager() {
           <button
             type="button"
             onClick={() => setMode('file')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-all ${
-              mode === 'file'
-                ? 'bg-[#0078D4] border-[#0078D4] text-white'
-                : 'bg-white/5 border-white/10 text-gray-400 hover:text-white'
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-all ${mode === 'file'
+              ? 'bg-[#0078D4] border-[#0078D4] text-white'
+              : 'bg-white/5 border-white/10 text-gray-400 hover:text-white'
+              }`}
           >
             <Upload className="w-4 h-4" />
             Upload File
@@ -266,7 +264,7 @@ export default function GalleryManager() {
             <img
               src={item.image_url}
               alt={item.caption || 'Gallery photo'}
-              className="w-full h-48 object-cover"
+              className="w-full h-auto object-cover"
             />
 
             {/* Overlay on hover */}

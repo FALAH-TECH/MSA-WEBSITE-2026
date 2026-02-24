@@ -69,7 +69,7 @@ export default function GalleryPreview({ images }: GalleryPreviewProps) {
                                     y: { type: "spring", stiffness: 300, damping: 20 },
                                     scale: { type: "spring", stiffness: 300, damping: 20 }
                                 }}
-                                className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer hover:shadow-[0_20px_40px_rgba(0,120,212,0.2)]"
+                                className="group relative rounded-2xl overflow-hidden cursor-pointer hover:shadow-[0_20px_40px_rgba(0,120,212,0.2)]"
                             >
                                 {/* Soft cyan glow border effect (via pseudo-element padding) */}
                                 <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#50A0E8]/50 transition-colors duration-500 z-20 pointer-events-none box-border" />
@@ -79,7 +79,7 @@ export default function GalleryPreview({ images }: GalleryPreviewProps) {
                                     src={image.imageUrl}
                                     alt={image.title || "Gallery image"}
                                     loading="lazy"
-                                    className="w-full h-full object-cover transform transition-transform duration-700 ease-out group-hover:scale-110"
+                                    className="w-full h-auto object-cover transform transition-transform duration-700 ease-out group-hover:scale-110"
                                 />
 
                                 {/* Dark gradient overlay on hover */}
