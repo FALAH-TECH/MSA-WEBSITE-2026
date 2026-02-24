@@ -185,7 +185,7 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
 
 export default function Team() {
   return (
-    <SectionWrapper id="team" className="relative py-28 bg-[#050810]">
+    <SectionWrapper id="team" className="relative py-28 bg-gradient-to-b from-[#050810] via-[#081221]/50 to-[#0a0f1e]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           className="text-center mb-14"

@@ -1,3 +1,4 @@
+import GalleryManager from './GalleryManager'
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
@@ -115,7 +116,7 @@ export default function AdminDashboard() {
               required
             />
             <select
-              title ="Category"
+              title="Category"
               value={category}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value)}
               className="p-3 rounded-lg bg-gray-800 border border-gray-700"
@@ -165,6 +166,9 @@ export default function AdminDashboard() {
             </div>
           ))}
         </div>
+
+        {/* Gallery Manager */}
+        <GalleryManager />
 
       </div>
     </div>

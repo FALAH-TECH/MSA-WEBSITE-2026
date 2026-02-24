@@ -190,7 +190,7 @@ function EventsGrid({ title, events }: { title: string; events: EventItem[] }) {
 
 export default function Events() {
   return (
-    <section id="events" className="relative py-36 bg-gradient-to-b from-[#050810] via-[#0a1628]/80 to-[#050810]">
+    <section id="events" className="relative py-36 bg-gradient-to-b from-[#050810] via-[#081221]/80 to-[#050810]">
       {/* Subtle top accent line for visual intent */}
       <div
         className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#0078D4]/40 to-transparent"

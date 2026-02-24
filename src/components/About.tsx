@@ -11,7 +11,7 @@ const highlights = [
 
 export default function About() {
   return (
-    <SectionWrapper id="about" className="relative py-32 bg-[#050810]">
+    <SectionWrapper id="about" className="relative py-32 bg-gradient-to-b from-[#050810] to-[#081221]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left content (smooth scroll reveal; no scale) */}

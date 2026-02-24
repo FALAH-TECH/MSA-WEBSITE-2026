@@ -14,16 +14,39 @@ import Events from "./components/Events";
 import Team from "./components/Team";
 import Join from "./components/Join";
 import Footer from "./components/Footer";
+import GalleryPreview, { GalleryImage } from "./components/GalleryPreview";
+import Gallery from "./components/Gallery";
 
 
 function PublicSite() {
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from('gallery')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(6)
+      .then(({ data, error }) => {
+        if (error) console.error("Error fetching gallery preview:", error);
+        if (data) {
+          setGalleryImages(data.map((item: any) => ({
+            id: item.id.toString(),
+            imageUrl: item.image_url,
+            title: item.event_tag || item.caption || undefined
+          })));
+        }
+      });
+  }, []);
+
   return (
     <>
       <Navbar />
       <Hero />
       <About />
-      <Stats />
-      <AnnouncementsPreview /> 
+      <Stats /> 
+      <AnnouncementsPreview />
+      <GalleryPreview images={galleryImages} />
       <Events />
       <Team />
       <Join />
@@ -52,12 +75,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-  <Route path="/" element={<PublicSite />} />
-  <Route path="/announcements" element={<Announcements />} />
-  <Route path="/admin" element={
-    session ? <AdminDashboard /> : <AdminLogin />
-  } />
-</Routes>
+        <Route path="/" element={<PublicSite />} />
+        <Route path="/announcements" element={<Announcements />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/admin" element={
+          session ? <AdminDashboard /> : <AdminLogin />
+        } />
+      </Routes>
     </BrowserRouter>
   )
 }

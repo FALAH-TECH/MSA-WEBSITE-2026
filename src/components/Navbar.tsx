@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useReducedMotion, motionConfig } from "./Motion";
 
@@ -7,6 +8,7 @@ const navLinks = [
   { name: "About", href: "#about" },
   { name: "Events", href: "#events" },
   { name: "Team", href: "#team" },
+  { name: "Gallery", href: "/gallery" },
   { name: "Join", href: "#join" },
   { name: "Announcements", href: "/announcements" },
   { name: "Contact", href: "#contact" },
@@ -44,11 +46,11 @@ export default function Navbar() {
       transition: reduceMotion
         ? { duration: 0.1 }
         : {
-            duration: 0.45,
-            ease: motionConfig.premiumEasing,
-            staggerChildren: 0.06,
-            delayChildren: 0.08,
-          },
+          duration: 0.45,
+          ease: motionConfig.premiumEasing,
+          staggerChildren: 0.06,
+          delayChildren: 0.08,
+        },
     },
   };
 
@@ -66,9 +68,8 @@ export default function Navbar() {
         ease: motionConfig.premiumEasing,
       }}
       style={{ willChange: "transform, opacity" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-[#050810]/80 backdrop-blur-xl border-b border-white/10" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-[#050810]/80 backdrop-blur-xl border-b border-white/10" : "bg-transparent"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -95,30 +96,44 @@ export default function Navbar() {
             initial="hidden"
             animate="show"
           >
-            {navLinks.map((link) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                variants={desktopItem}
-                className="px-4 py-2 text-gray-300 hover:text-white transition-colors relative group rounded-lg"
-                style={{ willChange: "transform" }}
-                whileHover={!reduceMotion ? { y: -1, scale: 1.04 } : undefined}
-                whileTap={!reduceMotion ? { scale: 0.96 } : undefined}
-                transition={!reduceMotion ? { type: "spring", stiffness: 350, damping: 22 } : undefined}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span className="relative z-10 font-medium tracking-tight">{link.name}</span>
+            {navLinks.map((link) => {
+              const isInternal = link.href.startsWith("/");
+              const innerContent = (
+                <>
+                  <span className="relative z-10 font-medium tracking-tight">{link.name}</span>
 
-                {!reduceMotion && (
-                  <motion.div
-                    className="absolute inset-0 bg-white/5 rounded-lg"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.18 }}
-                  />
-                )}
-              </motion.a>
-            ))}
+                  {!reduceMotion && (
+                    <motion.div
+                      className="absolute inset-0 bg-white/5 rounded-lg"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.18 }}
+                    />
+                  )}
+                </>
+              );
+
+              const motionProps: any = {
+                variants: desktopItem,
+                className: "px-4 py-2 text-gray-300 hover:text-white transition-colors relative group rounded-lg block",
+                style: { willChange: "transform" },
+                whileHover: !reduceMotion ? { y: -1, scale: 1.04 } : undefined,
+                whileTap: !reduceMotion ? { scale: 0.96 } : undefined,
+                transition: !reduceMotion ? { type: "spring", stiffness: 350, damping: 22 } : undefined,
+                onClick: () => setIsMobileMenuOpen(false),
+              };
+
+              return isInternal ? (
+                <motion.div key={link.name} {...motionProps}>
+                  <Link to={link.href} className="absolute inset-0 z-20 rounded-lg" />
+                  {innerContent}
+                </motion.div>
+              ) : (
+                <motion.a key={link.name} href={link.href} {...motionProps}>
+                  {innerContent}
+                </motion.a>
+              );
+            })}
           </motion.div>
 
           <motion.button
@@ -146,25 +161,28 @@ export default function Navbar() {
             style={{ willChange: "height, opacity" }}
           >
             <div className="px-6 py-4 space-y-2">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  initial={{ opacity: 0, x: reduceMotion ? 0 : -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: reduceMotion ? 0 : -12 }}
-                  transition={{
-                    delay: reduceMotion ? 0 : index * 0.04,
-                    duration: 0.18,
-                    ease: "easeOut",
-                  }}
-                  style={{ willChange: "transform, opacity" }}
-                >
-                  {link.name}
-                </motion.a>
-              ))}
+              {navLinks.map((link, index) => {
+                const isInternal = link.href.startsWith("/");
+                const motionProps: any = {
+                  initial: { opacity: 0, x: reduceMotion ? 0 : -12 },
+                  animate: { opacity: 1, x: 0 },
+                  exit: { opacity: 0, x: reduceMotion ? 0 : -12 },
+                  transition: { delay: reduceMotion ? 0 : index * 0.04, duration: 0.18, ease: "easeOut" },
+                  style: { willChange: "transform, opacity" },
+                  className: "block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors relative",
+                };
+
+                return isInternal ? (
+                  <motion.div key={link.name} {...motionProps}>
+                    <Link to={link.href} className="absolute inset-0 z-10 rounded-lg" onClick={() => setIsMobileMenuOpen(false)} />
+                    <span className="relative z-0 pointer-events-none">{link.name}</span>
+                  </motion.div>
+                ) : (
+                  <motion.a key={link.name} href={link.href} onClick={() => setIsMobileMenuOpen(false)} {...motionProps}>
+                    {link.name}
+                  </motion.a>
+                );
+              })}
             </div>
           </motion.div>
         )}
