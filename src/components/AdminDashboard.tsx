@@ -1,8 +1,8 @@
 import GalleryManager from './GalleryManager'
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { Mail, Copy, Check } from 'lucide-react'
 
-// Type definition for an announcement
 type Announcement = {
   id: number
   title: string
@@ -12,20 +12,29 @@ type Announcement = {
   created_at: string
 }
 
+type Subscriber = {
+  id: number
+  name: string
+  email: string
+  created_at: string
+}
+
 export default function AdminDashboard() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([])
+  const [subscribers, setSubscribers] = useState<Subscriber[]>([])
   const [loading, setLoading] = useState(true)
+  const [subLoading, setSubLoading] = useState(true)
+  const [copied, setCopied] = useState(false)
 
-  // Form state
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [category, setCategory] = useState('General')
   const [imageUrl, setImageUrl] = useState('')
   const [posting, setPosting] = useState(false)
 
-  // Fetch all announcements on load
   useEffect(() => {
     fetchAnnouncements()
+    fetchSubscribers()
   }, [])
 
   const fetchAnnouncements = async () => {
@@ -33,50 +42,56 @@ export default function AdminDashboard() {
       .from('announcements')
       .select('*')
       .order('created_at', { ascending: false })
-
     if (error) console.error(error)
     else setAnnouncements(data || [])
     setLoading(false)
   }
 
-  // Create a new announcement
+  const fetchSubscribers = async () => {
+    const { data, error } = await supabase
+      .from('newsletter')
+      .select('*')
+      .order('created_at', { ascending: false })
+    if (error) console.error(error)
+    else setSubscribers(data || [])
+    setSubLoading(false)
+  }
+
+  const copyAllEmails = () => {
+    const emails = subscribers.map(s => s.email).join(', ')
+    navigator.clipboard.writeText(emails)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault()
     setPosting(true)
-
     const { error } = await supabase.from('announcements').insert({
-      title,
-      body,
-      category,
+      title, body, category,
       image_url: imageUrl || null,
     })
-
     if (error) {
       console.error(error)
       alert('Failed to post announcement')
     } else {
-      // Clear form and refresh list
       setTitle('')
       setBody('')
       setCategory('General')
       setImageUrl('')
       fetchAnnouncements()
     }
-
     setPosting(false)
   }
 
-  // Delete an announcement
   const handleDelete = async (id: number) => {
     const confirmed = window.confirm('Delete this announcement?')
     if (!confirmed) return
-
     const { error } = await supabase.from('announcements').delete().eq('id', id)
     if (error) console.error(error)
     else fetchAnnouncements()
   }
 
-  // Logout
   const handleLogout = async () => {
     await supabase.auth.signOut()
   }
@@ -143,7 +158,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Announcements List */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mb-12">
           <h2 className="text-xl font-semibold">All Announcements</h2>
           {loading && <p className="text-gray-400">Loading...</p>}
           {!loading && announcements.length === 0 && (
@@ -165,6 +180,57 @@ export default function AdminDashboard() {
               </button>
             </div>
           ))}
+        </div>
+
+        {/* Newsletter Subscribers */}
+        <div className="mb-12">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-xl font-semibold">Newsletter Subscribers</h2>
+              <p className="text-gray-500 text-sm mt-0.5">
+                {subscribers.length} subscriber{subscribers.length !== 1 ? 's' : ''}
+              </p>
+            </div>
+            {subscribers.length > 0 && (
+              <button
+                onClick={copyAllEmails}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all text-sm"
+              >
+                {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                {copied ? 'Copied!' : 'Copy all emails'}
+              </button>
+            )}
+          </div>
+
+          {subLoading && <p className="text-gray-400">Loading...</p>}
+
+          {!subLoading && subscribers.length === 0 && (
+            <div className="bg-gray-900 rounded-xl p-6 text-center">
+              <Mail className="w-8 h-8 text-gray-600 mx-auto mb-2" />
+              <p className="text-gray-400">No subscribers yet.</p>
+            </div>
+          )}
+
+          <div className="flex flex-col gap-2">
+            {subscribers.map((s) => (
+              <div key={s.id} className="bg-gray-900 rounded-xl p-4 flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-[#0078D4]/20 border border-[#0078D4]/30 flex items-center justify-center text-[#50A0E8] text-sm font-semibold">
+                    {s.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="text-white font-medium text-sm">{s.name}</p>
+                    <p className="text-gray-400 text-xs">{s.email}</p>
+                  </div>
+                </div>
+                <p className="text-gray-600 text-xs">
+                  {new Date(s.created_at).toLocaleDateString('en-IN', {
+                    day: 'numeric', month: 'short', year: 'numeric'
+                  })}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Gallery Manager */}

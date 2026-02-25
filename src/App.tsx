@@ -16,7 +16,7 @@ import Join from "./components/Join";
 import Footer from "./components/Footer";
 import GalleryPreview, { GalleryImage } from "./components/GalleryPreview";
 import Gallery from "./components/Gallery";
-
+import Newsletter from "./components/Newsletter";
 
 function PublicSite() {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);

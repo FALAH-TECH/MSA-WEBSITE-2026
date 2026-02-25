@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { motion } from 'framer-motion'
 import { Calendar, Tag } from 'lucide-react'
 
+
 type Announcement = {
   id: number
   title: string
