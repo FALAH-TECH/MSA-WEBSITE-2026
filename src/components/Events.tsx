@@ -19,6 +19,18 @@ export type EventItem = {
 // All events in one list; we split by status and sort
 const allEvents: EventItem[] = [
   {
+    title: " MSA CORNER – MICRO PROJECT EXPO 2026",
+    date: "Mar 3, 2026",
+    dateSortKey: "2026-03-03",
+    venue: "EEE DEPARTMENT, LBSCEK",
+    attendees: "80+ participants",
+    description:
+      "The Microsoft Student Ambassadors of L.B.S. College of Engineering present MSA Corner in collaboration with Micro Project Expo 2026.A space for innovation, creativity, and technology where students can explore projects, connect with peers, and discover opportunities with the Microsoft Student Ambassador community.",
+    imageUrl: "EVENTS\\MSA CORNER.jpeg",
+    reelUrl: "https://www.instagram.com/p/DVWE8O1kv2W/",
+    status: "past",
+  },
+  {
     title: "Getting Started with Cybersecurity & Ethical Hacking",
     date: "Feb 5, 2026",
     dateSortKey: "2026-02-05",
